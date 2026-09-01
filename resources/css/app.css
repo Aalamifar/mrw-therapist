@@ -9,3 +9,38 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+
+/* ================================
+   MRW Layout
+================================ */
+
+@layer components {
+
+    .sidebar-link {
+        @apply flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-gray-300 transition-all duration-200;
+    }
+
+    .sidebar-link:hover {
+        @apply bg-[#102A42] text-white;
+    }
+
+
+    .mobile-nav-item {
+        @apply flex flex-col items-center justify-center gap-1 text-[10px] text-gray-300 transition;
+    }
+
+    .mobile-nav-item:hover {
+        @apply text-[#E9C72A];
+    }
+
+
+    .mobile-menu-item {
+        @apply rounded-2xl bg-[#102A42] px-4 py-4 text-center text-sm transition;
+    }
+
+    .mobile-menu-item:hover {
+        @apply bg-[#173653];
+    }
+
+}
