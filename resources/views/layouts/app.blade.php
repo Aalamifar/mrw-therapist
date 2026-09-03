@@ -28,7 +28,8 @@
             ['href' => route('admin.users.index'), 'icon' => 'users', 'label' => 'مدیریت کاربران'],
         ],
         'therapist' => [
-            ['href' => '#', 'icon' => 'book', 'label' => 'کلاس‌ها'],
+            ['href' => route('therapist.classes'), 'icon' => 'book', 'label' => 'کلاس‌ها'],
+            ['href' => '#', 'icon' => 'chat', 'label' => 'پیام‌رسان'],
         ],
         'student' => [
             ['href' => '#', 'icon' => 'book', 'label' => 'کلاس‌ها'],
@@ -61,11 +62,13 @@
 
         {{-- Logo --}}
         <div class="flex items-center justify-center">
-            <img src="{{ asset('img/logo.png') }}" alt="لوگوی MRW" class="rounded-md">
+            <img src="{{ asset('img/logo.png') }}" alt="لوگوی MRW" class="rounded-3xl p-2.5">
         </div>
 
         {{-- Navigation --}}
-        <nav class="mt-7 flex-1 space-y-1 px-4">
+        {{-- Note: flex+gap here (not space-y-*) — margin-based spacing doesn't
+             apply to the logout item's <form>, which is display:contents. --}}
+        <nav class="mt-7 flex flex-1 flex-col gap-1 px-4">
             <x-nav-link :href="$dashboardRoute" icon="home">داشبورد</x-nav-link>
 
             @foreach ($navItems as $item)
@@ -74,7 +77,7 @@
         </nav>
 
         {{-- Bottom sidebar --}}
-        <div class="space-y-1 border-t border-slate-700 p-4">
+        <div class="flex flex-col gap-1 border-t border-slate-700 p-4">
             <x-nav-link href="#" icon="settings">راهنما</x-nav-link>
             <x-nav-link :href="route('logout')" icon="logout" form>خروج</x-nav-link>
         </div>

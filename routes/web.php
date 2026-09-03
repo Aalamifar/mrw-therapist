@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Livewire\Volt\Volt;
+use App\Http\Controllers\LessonFileController;
+use App\Http\Controllers\LessonGameController;
 
 Route::middleware('guest')->group(function () {
     Volt::route('/', 'auth.login')->name('login');
@@ -14,6 +16,13 @@ Route::middleware('auth')->post('/logout', function (Request $request) {
     return redirect()->route('login');
 })->name('logout');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/files/lesson/{lesson}', [LessonFileController::class, 'show'])->name('lesson.file');
+    Route::get('/games/lesson/{lesson}/{path?}', [LessonGameController::class, 'show'])
+        ->where('path', '.*')
+        ->name('lesson.game');
+});
+
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Volt::route('/admin/dashboard', 'admin.dashboard')->name('admin.dashboard');
     Volt::route('/admin/users/create', 'admin.create-user')->name('admin.users.create');
@@ -24,9 +33,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 Route::middleware(['auth', 'role:therapist'])->group(function () {
     Volt::route('/therapist/dashboard', 'therapist.dashboard')->name('therapist.dashboard');
+    Volt::route('/therapist/classes', 'therapist.classes')->name('therapist.classes');
+    Volt::route('/therapist/classes/{classId}', 'therapist.class-show')->name('therapist.classes.show');
 });
 
 Route::middleware(['auth', 'role:student'])->group(function () {
     Volt::route('/student/dashboard', 'student.dashboard')->name('student.dashboard');
 });
-

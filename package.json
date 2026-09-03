@@ -15,5 +15,9 @@
         "postcss": "^8.5.26",
         "tailwindcss": "^4.3.3",
         "vite": "^7.0.7"
+    },
+    "dependencies": {
+        "jalaali-js": "^2.0.1",
+        "jalalidatepicker": "^0.6.0"
     }
 }
