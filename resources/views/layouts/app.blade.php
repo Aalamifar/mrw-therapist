@@ -29,7 +29,7 @@
         ],
         'therapist' => [
             ['href' => route('therapist.classes'), 'icon' => 'book', 'label' => 'کلاس‌ها'],
-            ['href' => '#', 'icon' => 'chat', 'label' => 'پیام‌رسان'],
+            ['href' => route('therapist.messenger'), 'icon' => 'chat', 'label' => 'پیام‌رسان'],
         ],
         'student' => [
             ['href' => '#', 'icon' => 'book', 'label' => 'کلاس‌ها'],

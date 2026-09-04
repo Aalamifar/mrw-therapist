@@ -2,21 +2,34 @@
 
 use Livewire\Volt\Component;
 use App\Models\SchoolClass;
+use App\Models\Message; // 👈 اضافه شد برای شمارش پیام‌ها
 
 new class extends Component
 {
     public int $classesCount = 0;
     public int $studentsCount = 0;
-    public int $unreadMessages = 3; // بعداً با کوئری واقعی جایگزین شود
+    public int $unreadMessages = 0; // 👈 مقدار پیش‌فرض صفر شد
 
     public function mount()
     {
         $therapistId = auth()->id();
+        
+        // 1. شمارش کلاس‌ها
         $this->classesCount = SchoolClass::where('therapist_id', $therapistId)->count();
         
-        // اگر رابطه students را دارید این کار می‌کند، وگرنه فعلاً 0 نشان می‌دهد
+        // 2. شمارش دانش‌آموزان
         $this->studentsCount = SchoolClass::where('therapist_id', $therapistId)
-            ->withCount('students')->get()->sum('students_count');
+            ->withCount('students')
+            ->get()
+            ->sum('students_count');
+
+        // 3. شمارش واقعی پیام‌های خوانده‌نشده
+        $this->unreadMessages = Message::whereHas('conversation.users', function ($q) use ($therapistId) {
+                $q->where('users.id', $therapistId);
+            })
+            ->where('sender_id', '!=', $therapistId)
+            ->whereNull('read_at')
+            ->count();
     }
 
     public function goToClasses()
@@ -32,7 +45,7 @@ new class extends Component
         <div>
             <h1 class="text-2xl font-bold text-[#061C32]">سلام، {{ auth()->user()->name }} 👋</h1>
             <p class="mt-1 text-sm text-slate-500">
-                روز خوبی داشته باشید.
+                روز خوبی برای آموزش داشته باشید.
             </p>
         </div>
     </div>
@@ -56,7 +69,7 @@ new class extends Component
         </div>
     </div>
 
-    {{-- 3. Main Actions (همان ایده شما، اما شیک‌تر) --}}
+    {{-- 3. Main Actions --}}
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <a href="{{ route('therapist.classes') }}" class="group flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 transition-all hover:border-[#061C32]/30 hover:shadow-md">
             <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#061C32] text-white transition group-hover:scale-105">
@@ -68,7 +81,8 @@ new class extends Component
             </div>
         </a>
 
-        <a href="#" class="group relative flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 transition-all hover:border-[#E9C72A]/50 hover:shadow-md">
+        {{-- 👈 لینک به روت واقعی پیام‌رسان تغییر کرد --}}
+        <a href="{{ route('therapist.messenger') }}" class="group relative flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 transition-all hover:border-[#E9C72A]/50 hover:shadow-md">
             @if($unreadMessages > 0)
                 <span class="absolute top-4 left-4 flex h-2.5 w-2.5">
                     <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#E9C72A] opacity-75"></span>
@@ -81,13 +95,17 @@ new class extends Component
             <div>
                 <h3 class="font-bold text-[#061C32]">پیام‌رسان</h3>
                 <p class="mt-0.5 text-xs text-slate-500">
-                    @if($unreadMessages > 0) <span class="font-medium text-[#E9C72A]">{{ $unreadMessages }} پیام خوانده‌نشده</span> @else پاسخ به پیام‌ها @endif
+                    @if($unreadMessages > 0) 
+                        <span class="font-medium text-[#E9C72A]">{{ $unreadMessages }} پیام خوانده‌نشده</span> 
+                    @else 
+                        پاسخ به پیام‌های دانش‌آموزان 
+                    @endif
                 </p>
             </div>
         </a>
     </div>
 
-    {{-- 4. Upcoming (اختیاری اما حس پویایی می‌دهد) --}}
+    {{-- 4. Upcoming --}}
     @if($classesCount > 0)
         <div class="rounded-2xl border border-slate-100 bg-white p-5">
             <h3 class="mb-3 text-sm font-bold text-[#061C32]">کلاس‌های اخیر شما</h3>

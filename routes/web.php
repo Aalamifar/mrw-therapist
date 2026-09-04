@@ -35,6 +35,7 @@ Route::middleware(['auth', 'role:therapist'])->group(function () {
     Volt::route('/therapist/dashboard', 'therapist.dashboard')->name('therapist.dashboard');
     Volt::route('/therapist/classes', 'therapist.classes')->name('therapist.classes');
     Volt::route('/therapist/classes/{classId}', 'therapist.class-show')->name('therapist.classes.show');
+    Volt::route('/therapist/messenger', 'therapist.messenger')->name('therapist.messenger');
 });
 
 Route::middleware(['auth', 'role:student'])->group(function () {
