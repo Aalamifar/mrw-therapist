@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class AssignmentSubmission extends Model
 {
+    protected $fillable = [
+        'assignment_id', 'student_id', 'answer_text', 'answer_file',
+        'grade', 'feedback', 'submitted_at',
+    ];
+
+    protected $casts = ['submitted_at' => 'datetime'];
     public function assignment()
     {
         return $this->belongsTo(Assignment::class);

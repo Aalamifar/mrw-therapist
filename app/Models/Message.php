@@ -4,18 +4,27 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Message extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'conversation_id',
         'sender_id',
         'body',
         'read_at',
+        'attachment_path',
+        'attachment_name',
+        'attachment_type',
+        'attachment_size',
+        'edited_at',
     ];
 
     protected $casts = [
         'read_at' => 'datetime',
+        'edited_at' => 'datetime',
     ];
 
     /**
@@ -32,5 +41,15 @@ class Message extends Model
     public function sender(): BelongsTo
     {
         return $this->belongsTo(User::class, 'sender_id');
+    }
+
+    public function hasAttachment(): bool
+    {
+        return ! empty($this->attachment_path);
+    }
+
+    public function isEdited(): bool
+    {
+        return $this->edited_at !== null;
     }
 }

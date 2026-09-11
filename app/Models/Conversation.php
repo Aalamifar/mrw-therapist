@@ -40,6 +40,8 @@ class Conversation extends Model
      */
     public function otherUser(User $user): ?User
     {
-        return $this->users->firstWhere('id', '!=', $user->id);
+        return $this->users()
+            ->where('users.id', '!=', $user->getKey())
+            ->first();
     }
 }

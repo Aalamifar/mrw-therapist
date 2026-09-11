@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('class_id')->constrained('classes')->cascadeOnDelete();
             $table->string('title');
             $table->dateTime('scheduled_at')->nullable();
+            $table->unsignedInteger('duration_minutes')->default(30);
             $table->timestamps();
         });
     }

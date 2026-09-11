@@ -11,9 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        $isSqlite = Schema::getConnection()->getDriverName() === 'sqlite';
+
+        Schema::table('users', function (Blueprint $table) use ($isSqlite) {
             $table->string('phone')->unique()->after('name');
             $table->enum('role', ['student', 'therapist', 'admin'])->default('student')->after('phone');
+
+            // SQLite requires removing this index before rebuilding the table.
+            if ($isSqlite) {
+                $table->dropUnique('users_email_unique');
+            }
+
             $table->dropColumn(['email', 'email_verified_at']);
         });
     }

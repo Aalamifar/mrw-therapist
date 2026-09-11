@@ -14,9 +14,12 @@ return new class extends Migration
         Schema::create('exam_questions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('exam_id')->constrained()->cascadeOnDelete();
+            $table->enum('type', ['multiple_choice', 'text'])->default('multiple_choice');
             $table->text('question');
             $table->json('options')->nullable(); // برای سوالات چندگزینه‌ای
             $table->string('correct_answer')->nullable();
+            $table->unsignedInteger('points')->default(1);
+            $table->string('file_path')->nullable();
             $table->timestamps();
         });
     }

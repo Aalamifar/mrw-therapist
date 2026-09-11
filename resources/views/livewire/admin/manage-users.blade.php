@@ -20,7 +20,7 @@ new class extends Component
     public function users()
     {
         return User::when($this->search, function ($query) {
-                $query->where(function($q) {
+                $query->where(function ($q) {
                     $q->where('name', 'like', '%' . $this->search . '%')
                       ->orWhere('phone', 'like', '%' . $this->search . '%');
                 });
@@ -48,15 +48,15 @@ new class extends Component
     public function updateUser()
     {
         $validated = $this->validate([
-            'editName' => 'required|string|max:255',
+            'editName'  => 'required|string|max:255',
             'editPhone' => 'required|string|unique:users,phone,' . $this->editingUserId,
-            'editRole' => 'required|in:student,therapist,admin',
+            'editRole'  => 'required|in:student,therapist,admin',
         ]);
 
         User::findOrFail($this->editingUserId)->update([
-            'name' => $validated['editName'],
+            'name'  => $validated['editName'],
             'phone' => $validated['editPhone'],
-            'role' => $validated['editRole'],
+            'role'  => $validated['editRole'],
         ]);
 
         $this->successMessage = 'اطلاعات کاربر به‌روزرسانی شد.';
@@ -88,87 +88,111 @@ new class extends Component
     {
         return mb_substr($name, 0, 1);
     }
+
+    /** رنگ‌بندی و برچسب هر نقش — یک‌جا و قابل نگهداری */
+    public function roleInfo(string $role): array
+    {
+        return match ($role) {
+            'admin' => [
+                'label'  => 'ادمین',
+                'badge'  => 'bg-[#faf0d2] text-[#b98a10]',
+                'avatar' => 'bg-gradient-to-br from-[#f0d060] to-[#d7a92b] text-[#0b1826]',
+            ],
+            'therapist' => [
+                'label'  => 'مربی',
+                'badge'  => 'bg-[#f3e8fa] text-[#9333ea]',
+                'avatar' => 'bg-[#f3e8fa] text-[#9333ea]',
+            ],
+            default => [
+                'label'  => 'دانش‌آموز',
+                'badge'  => 'bg-[#dff4f0] text-[#0d9488]',
+                'avatar' => 'bg-[#dff4f0] text-[#0d9488]',
+            ],
+        };
+    }
 }; ?>
 
 <div class="space-y-6">
 
-    {{-- Header --}}
+    {{-- ═══════════ هدر + دکمه کاربر جدید ═══════════ --}}
     <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-            <h1 class="text-2xl font-bold text-[#061C32]">مدیریت کاربران</h1>
+            <h1 class="text-2xl font-extrabold">مدیریت کاربران</h1>
             <p class="mt-1 text-sm text-slate-500">مشاهده، ویرایش و مدیریت دسترسی کاربران سیستم</p>
         </div>
         <a
             href="{{ route('admin.users.create') }}"
-            class="inline-flex items-center justify-center gap-2 rounded-lg bg-[#E9C72A] px-4 py-2.5 text-sm font-bold text-[#061C32] transition hover:brightness-95"
+            class="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-[#f0d060] to-[#d7a92b] px-4 py-2.5 text-sm font-extrabold text-[#0b1826] shadow-md transition hover:-translate-y-0.5 hover:shadow-lg"
         >
             <x-icon name="plus" class="h-4 w-4 shrink-0" />
             <span>کاربر جدید</span>
         </a>
     </div>
 
-    {{-- Search --}}
+    {{-- ═══════════ جستجو ═══════════ --}}
     <div class="relative w-full sm:max-w-sm">
-        <x-icon name="search" class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+        <x-icon name="search" class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#b98a10]" />
         <input
             type="text"
             wire:model.live.debounce.400ms="search"
             placeholder="جستجوی نام یا شماره تلفن..."
-            class="w-full rounded-lg border border-slate-200 bg-white py-2.5 pl-3 pr-10 text-sm outline-none transition focus:border-[#061C32]/40 focus:ring-2 focus:ring-[#061C32]/10"
+            class="w-full rounded-xl border border-[#eee4d9] bg-[#fdfbf8] py-2.5 pl-3 pr-10 text-sm shadow-sm outline-none transition placeholder:text-slate-400 focus:border-[#d7a92b]/50 focus:ring-2 focus:ring-[#d7a92b]/20"
         >
     </div>
 
-    {{-- Success Message --}}
+    {{-- ═══════════ پیام موفقیت ═══════════ --}}
     @if ($successMessage)
-        <div class="flex items-center gap-2 rounded-lg bg-green-50 px-3 py-2.5 text-sm text-green-700 border border-green-100">
+        <div class="flex items-center gap-2 rounded-xl border border-[#c9ecd2] bg-[#e2f6e7] px-3 py-2.5 text-sm font-medium text-[#16a34a]">
             <x-icon name="check-circle" class="h-4 w-4 shrink-0" />
             {{ $successMessage }}
         </div>
     @endif
 
-    {{-- Users List --}}
-    <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+    {{-- ═══════════ لیست کاربران ═══════════ --}}
+    <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
         @forelse ($this->users() as $user)
-            <div wire:key="user-{{ $user->id }}" class="border-b border-slate-100 px-4 py-4 last:border-b-0 hover:bg-slate-50/70 sm:px-5">
-                
+            @php $info = $this->roleInfo($user->role); @endphp
+
+            <div wire:key="user-{{ $user->id }}" class="border-b border-[#f0e7dc] px-4 py-4 transition last:border-b-0 hover:bg-[#faf5ec] sm:px-5">
+
                 <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                    
-                    {{-- User Info --}}
-                    <div class="flex items-center gap-3 min-w-0">
-                        <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#061C32] text-xs font-bold text-white">
+
+                    {{-- اطلاعات کاربر --}}
+                    <div class="flex min-w-0 items-center gap-3">
+                        <div class="grid h-11 w-11 shrink-0 place-items-center rounded-full text-sm font-extrabold {{ $info['avatar'] }}">
                             {{ $this->initials($user->name) }}
                         </div>
                         <div class="min-w-0">
-                            <div class="font-bold text-[#061C32] truncate">{{ $user->name }}</div>
-                            <div class="text-xs text-slate-500">{{ $user->phone }}</div>
+                            <div class="truncate font-bold">{{ $user->name }}</div>
+                            <div class="mt-0.5 text-xs text-slate-500" dir="ltr">{{ $user->phone }}</div>
                         </div>
                     </div>
 
-                    {{-- Role & Actions --}}
+                    {{-- نقش + عملیات --}}
                     <div class="flex items-center justify-between gap-4 sm:justify-end">
-                        <span class="rounded-md bg-[#061C32]/5 px-2 py-0.5 text-xs text-[#061C32]/70">
-                            {{ $user->role === 'admin' ? 'ادمین' : ($user->role === 'therapist' ? 'مربی' : 'دانش‌آموز') }}
+                        <span class="rounded-md px-2.5 py-1 text-xs font-bold {{ $info['badge'] }}">
+                            {{ $info['label'] }}
                         </span>
 
                         <div class="flex items-center gap-1">
-                            <button 
+                            <button
                                 wire:click="startEdit({{ $user->id }})"
-                                class="p-1.5 text-slate-600 transition hover:bg-slate-100 rounded-lg"
+                                class="rounded-lg p-2 text-slate-600 transition hover:bg-[#f0e7dc] hover:text-slate-800"
                                 title="ویرایش"
                             >
                                 <x-icon name="pencil" class="h-4 w-4" />
                             </button>
-                            <button 
+                            <button
                                 wire:click="startEditPassword({{ $user->id }})"
-                                class="p-1.5 text-blue-600 transition hover:bg-blue-50 rounded-lg"
+                                class="rounded-lg p-2 text-[#9333ea] transition hover:bg-[#f3e8fa]"
                                 title="تغییر رمز"
                             >
                                 <x-icon name="lock" class="h-4 w-4" />
                             </button>
-                            <button 
+                            <button
                                 wire:click="deleteUser({{ $user->id }})"
                                 wire:confirm="مطمئنی می‌خوای این کاربر رو حذف کنی؟"
-                                class="p-1.5 text-red-600 transition hover:bg-red-50 rounded-lg"
+                                class="rounded-lg p-2 text-red-600 transition hover:bg-red-50"
                                 title="حذف"
                             >
                                 <x-icon name="trash" class="h-4 w-4" />
@@ -177,58 +201,119 @@ new class extends Component
                     </div>
                 </div>
 
-                {{-- Inline Edit Form --}}
+                {{-- ═══ فرم ویرایش اطلاعات ═══ --}}
                 @if ($editingUserId === $user->id)
-                    <div class="mt-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <div class="mt-4 rounded-xl border border-[#eee4d9] bg-[#faf5ec] p-4">
                         <form wire:submit="updateUser" class="grid grid-cols-1 gap-3 sm:grid-cols-4 sm:items-end">
                             <div>
-                                <label class="block text-xs font-medium text-slate-500 mb-1">نام</label>
-                                <input type="text" wire:model="editName" class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#061C32]/10">
-                                @error('editName') <span class="text-[10px] text-red-600">{{ $message }}</span> @enderror
+                                <label class="mb-1 block text-xs font-bold text-slate-600">نام</label>
+                                <input
+                                    type="text"
+                                    wire:model="editName"
+                                    class="w-full rounded-xl border border-[#eee4d9] bg-white px-3 py-2 text-sm shadow-sm outline-none transition focus:border-[#d7a92b]/50 focus:ring-2 focus:ring-[#d7a92b]/20"
+                                >
+                                @error('editName') <span class="mt-1 block text-[10px] text-red-600">{{ $message }}</span> @enderror
                             </div>
                             <div>
-                                <label class="block text-xs font-medium text-slate-500 mb-1">تلفن</label>
-                                <input type="text" wire:model="editPhone" class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#061C32]/10">
-                                @error('editPhone') <span class="text-[10px] text-red-600">{{ $message }}</span> @enderror
+                                <label class="mb-1 block text-xs font-bold text-slate-600">تلفن</label>
+                                <input
+                                    type="text"
+                                    wire:model="editPhone"
+                                    dir="ltr"
+                                    class="w-full rounded-xl border border-[#eee4d9] bg-white px-3 py-2 text-left text-sm shadow-sm outline-none transition focus:border-[#d7a92b]/50 focus:ring-2 focus:ring-[#d7a92b]/20"
+                                >
+                                @error('editPhone') <span class="mt-1 block text-[10px] text-red-600">{{ $message }}</span> @enderror
                             </div>
                             <div>
-                                <label class="block text-xs font-medium text-slate-500 mb-1">نقش</label>
-                                <select wire:model="editRole" class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#061C32]/10">
-                                    <option value="student">دانش‌آموز</option>
-                                    <option value="therapist">مربی</option>
-                                    <option value="admin">ادمین</option>
-                                </select>
-                                @error('editRole') <span class="text-[10px] text-red-600">{{ $message }}</span> @enderror
+                                <label class="mb-1 block text-xs font-bold text-slate-600">نقش</label>
+                                <div class="relative">
+                                    <select
+                                        wire:model="editRole"
+                                        class="w-full appearance-none rounded-xl border border-[#eee4d9] bg-white px-3 py-2 text-sm shadow-sm outline-none transition focus:border-[#d7a92b]/50 focus:ring-2 focus:ring-[#d7a92b]/20"
+                                    >
+                                        <option value="student">دانش‌آموز</option>
+                                        <option value="therapist">مربی</option>
+                                        <option value="admin">ادمین</option>
+                                    </select>
+                                    <x-icon name="chevron-down" class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#b98a10]" />
+                                </div>
+                                @error('editRole') <span class="mt-1 block text-[10px] text-red-600">{{ $message }}</span> @enderror
                             </div>
                             <div class="flex gap-2">
-                                <button type="submit" class="flex-1 bg-[#061C32] text-white py-2 rounded-lg text-sm font-bold hover:brightness-110">ذخیره</button>
-                                <button type="button" wire:click="$set('editingUserId', null)" class="flex-1 bg-white border border-slate-200 py-2 rounded-lg text-sm text-slate-600 hover:bg-slate-50">انصراف</button>
+                                <button
+                                    type="submit"
+                                    class="flex-1 rounded-xl bg-[#0b1826] py-2 text-sm font-bold text-[#e8c465] transition hover:bg-[#132840]"
+                                >
+                                    ذخیره
+                                </button>
+                                <button
+                                    type="button"
+                                    wire:click="$set('editingUserId', null)"
+                                    class="flex-1 rounded-xl border border-[#eee4d9] bg-white py-2 text-sm text-slate-600 transition hover:bg-[#f0e7dc]"
+                                >
+                                    انصراف
+                                </button>
                             </div>
                         </form>
                     </div>
                 @endif
 
-                {{-- Password Edit Form --}}
+                {{-- ═══ فرم تغییر رمز ═══ --}}
                 @if ($passwordEditingUserId === $user->id)
-                    <div class="mt-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
-                        <form wire:submit="updatePassword" class="flex flex-col sm:flex-row gap-3 sm:items-end">
+                    <div class="mt-4 rounded-xl border border-[#eee4d9] bg-[#faf5ec] p-4">
+                        <form wire:submit="updatePassword" class="flex flex-col gap-3 sm:flex-row sm:items-end">
                             <div class="flex-1">
-                                <label class="block text-xs font-medium text-slate-500 mb-1">رمز عبور جدید</label>
-                                <input type="password" wire:model="newPassword" class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#061C32]/10">
-                                @error('newPassword') <span class="text-[10px] text-red-600">{{ $message }}</span> @enderror
+                                <label class="mb-1 block text-xs font-bold text-slate-600">رمز عبور جدید</label>
+                                <input
+                                    type="password"
+                                    wire:model="newPassword"
+                                    dir="ltr"
+                                    class="w-full rounded-xl border border-[#eee4d9] bg-white px-3 py-2 text-left text-sm shadow-sm outline-none transition focus:border-[#d7a92b]/50 focus:ring-2 focus:ring-[#d7a92b]/20"
+                                >
+                                @error('newPassword') <span class="mt-1 block text-[10px] text-red-600">{{ $message }}</span> @enderror
                             </div>
                             <div class="flex gap-2">
-                                <button type="submit" class="flex-1 bg-[#061C32] text-white py-2 rounded-lg text-sm font-bold hover:brightness-110">به‌روزرسانی رمز</button>
-                                <button type="button" wire:click="$set('passwordEditingUserId', null)" class="flex-1 bg-white border border-slate-200 py-2 rounded-lg text-sm text-slate-600 hover:bg-slate-50">انصراف</button>
+                                <button
+                                    type="submit"
+                                    class="flex-1 rounded-xl bg-[#0b1826] py-2 text-sm font-bold text-[#e8c465] transition hover:bg-[#132840]"
+                                >
+                                    به‌روزرسانی رمز
+                                </button>
+                                <button
+                                    type="button"
+                                    wire:click="$set('passwordEditingUserId', null)"
+                                    class="flex-1 rounded-xl border border-[#eee4d9] bg-white py-2 text-sm text-slate-600 transition hover:bg-[#f0e7dc]"
+                                >
+                                    انصراف
+                                </button>
                             </div>
                         </form>
                     </div>
                 @endif
             </div>
         @empty
-            <div class="flex flex-col items-center gap-3 px-5 py-16 text-center">
-                <x-icon name="users" class="h-8 w-8 text-slate-300" />
-                <p class="text-sm text-slate-500">کاربری یافت نشد.</p>
+            <div class="flex flex-col items-center gap-4 px-5 py-16 text-center">
+                <span class="grid h-16 w-16 place-items-center rounded-2xl bg-[#faf0d2] text-[#b98a10]">
+                    <x-icon name="users" class="h-8 w-8" />
+                </span>
+                @if ($search)
+                    <div>
+                        <p class="font-bold">نتیجه‌ای پیدا نشد</p>
+                        <p class="mt-1 text-sm text-slate-500">کاربری با این مشخصات وجود ندارد.</p>
+                    </div>
+                @else
+                    <div>
+                        <p class="font-bold">هنوز کاربری ساخته نشده</p>
+                        <p class="mt-1 text-sm text-slate-500">اولین کاربر رو بساز و شروع کن.</p>
+                    </div>
+                    <a
+                        href="{{ route('admin.users.create') }}"
+                        class="mt-2 inline-flex items-center gap-2 rounded-xl bg-gradient-to-br from-[#f0d060] to-[#d7a92b] px-4 py-2.5 text-sm font-bold text-[#0b1826] shadow-md transition hover:-translate-y-0.5 hover:shadow-lg"
+                    >
+                        <x-icon name="plus" class="h-4 w-4" />
+                        ساخت اولین کاربر
+                    </a>
+                @endif
             </div>
         @endforelse
     </div>

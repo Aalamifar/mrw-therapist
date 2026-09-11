@@ -9,10 +9,15 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800&display=swap');
+        body { font-family: 'Vazirmatn', ui-sans-serif, system-ui, sans-serif; }
+    </style>
+
     @livewireStyles
 </head>
 
-<body class="bg-[#F7F6F3] text-slate-800">
+<body class="bg-[#f4eee7] text-slate-800">
 
 @auth
 
@@ -20,7 +25,6 @@
     $role = auth()->user()->role;
     $dashboardRoute = route("{$role}.dashboard");
 
-    // Role-specific nav items (dashboard + logout are handled separately, always the same shape).
     $navItems = match ($role) {
         'admin' => [
             ['href' => route('admin.users.create'), 'icon' => 'plus', 'label' => 'ساخت کاربر'],
@@ -32,43 +36,32 @@
             ['href' => route('therapist.messenger'), 'icon' => 'chat', 'label' => 'پیام‌رسان'],
         ],
         'student' => [
-            ['href' => '#', 'icon' => 'book', 'label' => 'کلاس‌ها'],
-            ['href' => '#', 'icon' => 'video', 'label' => 'جلسه‌های آنلاین'],
-            ['href' => '#', 'icon' => 'clipboard-list', 'label' => 'آزمون‌ها'],
-            ['href' => '#', 'icon' => 'check-list', 'label' => 'تکالیف'],
-            ['href' => '#', 'icon' => 'check-circle', 'label' => 'ارزیابی‌ها'],
-            ['href' => '#', 'icon' => 'calendar', 'label' => 'تقویم'],
-            ['href' => '#', 'icon' => 'document', 'label' => 'مدارک'],
-            ['href' => '#', 'icon' => 'bell', 'label' => 'تابلوی اعلانات'],
-            ['href' => '#', 'icon' => 'chat', 'label' => 'پیام‌رسان'],
+            ['href' => route('student.classes.index'), 'icon' => 'book', 'label' => 'کلاس‌ها'],
+            ['href' => route('student.exams.index'), 'icon' => 'clipboard-list', 'label' => 'آزمون‌ها'],
+            ['href' => route('student.assignments.index'), 'icon' => 'check-list', 'label' => 'تکالیف'],
+            ['href' => route('student.calendar'), 'icon' => 'calendar', 'label' => 'تقویم'],
+            ['href' => route('student.messenger'), 'icon' => 'chat', 'label' => 'پیام‌رسان'],
         ],
         default => [],
     };
 
-    // On mobile, only the first couple of role items fit in the bottom bar;
-    // everything else (for every role, including therapist) goes in the "بیشتر" drawer.
     $primaryMobileItems = array_slice($navItems, 0, 2);
     $secondaryMobileItems = array_slice($navItems, 2);
-    $mobileColumnCount = 3 + count($primaryMobileItems); // home + logout + more + primary items
+    $mobileColumnCount = 3 + count($primaryMobileItems);
 @endphp
 
 <div class="min-h-screen">
 
-    {{-- ========================================= --}}
-    {{-- DESKTOP SIDEBAR --}}
-    {{-- ========================================= --}}
+    {{-- ═══════════ سایدبار دسکتاپ ═══════════ --}}
+    <aside class="fixed right-0 top-0 z-50 hidden h-screen w-[240px] flex-col bg-[#0b1826] text-white lg:flex">
 
-    <aside class="fixed right-0 top-0 z-50 hidden h-screen w-[240px] flex-col bg-[#061C32] text-white lg:flex">
-
-        {{-- Logo --}}
-        <div class="flex items-center justify-center">
-            <img src="{{ asset('img/logo.png') }}" alt="لوگوی MRW" class="rounded-3xl p-2.5">
+        {{-- لوگو --}}
+        <div class="relative flex h-44 items-center justify-center overflow-hidden">
+            <img src="{{ asset('img/logo.png') }}" alt="لوگوی MRW" class="relative rounded-3xl p-2.5">
         </div>
 
-        {{-- Navigation --}}
-        {{-- Note: flex+gap here (not space-y-*) — margin-based spacing doesn't
-             apply to the logout item's <form>, which is display:contents. --}}
-        <nav class="mt-7 flex flex-1 flex-col gap-1 px-4">
+        {{-- منو --}}
+        <nav class="mt-2 flex flex-1 flex-col gap-1 px-4">
             <x-nav-link :href="$dashboardRoute" icon="home">داشبورد</x-nav-link>
 
             @foreach ($navItems as $item)
@@ -76,32 +69,40 @@
             @endforeach
         </nav>
 
-        {{-- Bottom sidebar --}}
-        <div class="flex flex-col gap-1 border-t border-slate-700 p-4">
+        {{-- پایین سایدبار --}}
+        <div class="flex flex-col gap-1 border-t border-white/10 p-4">
             <x-nav-link href="#" icon="settings">راهنما</x-nav-link>
             <x-nav-link :href="route('logout')" icon="logout" form>خروج</x-nav-link>
         </div>
-
     </aside>
 
 
-    {{-- ========================================= --}}
-    {{-- MAIN --}}
-    {{-- ========================================= --}}
-
+    {{-- ═══════════ محتوای اصلی ═══════════ --}}
     <div class="min-h-screen lg:mr-[240px]">
 
-        <header class="sticky top-0 z-40 border-b border-gray-200 bg-[#F7F6F3]/95 px-5 py-4 backdrop-blur lg:px-8">
+        {{-- هدر با تاریخ زنده --}}
+        <header class="sticky top-0 z-40 border-b border-[#e9ddc9] bg-[#f4eee7]/95 px-5 py-4 backdrop-blur lg:px-8">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <div class="flex h-11 w-11 items-center justify-center rounded-full bg-[#E9C72A] font-bold text-[#061C32]">
-                        {{ mb_substr(auth()->user()->name, 0, 1) }}
-                    </div>
+                    {{-- آواتار --}}
+                    <div class="grid h-11 w-11 place-items-center rounded-full bg-[#f6e7c6] text-2xl">🐻</div>
 
                     <div>
-                        <div class="text-sm font-bold">{{ auth()->user()->name }}</div>
-                        <div class="text-xs text-gray-500">
-                            {{ \Morilog\Jalali\Jalalian::now()->format('l j F Y') }} - {{ now()->format('H:i') }}
+                        <div class="text-sm font-extrabold">{{ auth()->user()->name }}</div>
+                        <div
+                            class="text-xs text-slate-500"
+                            x-data="{
+                                date: '', time: '',
+                                init() {
+                                    const fd = new Intl.DateTimeFormat('fa-IR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+                                    const ft = new Intl.DateTimeFormat('fa-IR', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+                                    this.date = fd.format(new Date());
+                                    const tick = () => this.time = ft.format(new Date());
+                                    tick(); setInterval(tick, 1000);
+                                }
+                            }"
+                        >
+                            <span x-text="date"></span> - <span x-text="time"></span>
                         </div>
                     </div>
                 </div>
@@ -111,15 +112,11 @@
         <main class="px-4 py-6 sm:px-6 lg:px-8">
             {{ $slot }}
         </main>
-
     </div>
 
 
-    {{-- ========================================= --}}
-    {{-- MOBILE BOTTOM NAVIGATION --}}
-    {{-- ========================================= --}}
-
-    <nav class="fixed bottom-0 right-0 left-0 z-50 border-t border-gray-200 bg-[#061C32] lg:hidden">
+    {{-- ═══════════ نوار پایین موبایل (طلایی) ═══════════ --}}
+    <nav class="fixed bottom-0 right-0 left-0 z-50 border-t border-[#c4a44b] bg-[#0b1826] lg:hidden">
 
         <div class="grid h-[72px]" style="grid-template-columns: repeat({{ $mobileColumnCount }}, minmax(0, 1fr));">
 
@@ -133,31 +130,24 @@
 
             <button
                 type="button"
-                class="mobile-nav-item"
+                class="mobile-nav-item text-[#e8c465]"
                 onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
             >
                 <x-icon name="menu" class="h-6 w-6" />
                 <span>بیشتر</span>
             </button>
-
         </div>
-
     </nav>
 
 
-    {{-- Mobile menu (everything that didn't fit in the bottom bar, for every role) --}}
-    <div id="mobile-menu" class="fixed bottom-[72px] right-0 left-0 z-40 hidden rounded-t-3xl bg-[#061C32] p-5 text-white shadow-2xl lg:hidden">
-
+    {{-- منوی بیشتر موبایل --}}
+    <div id="mobile-menu" class="fixed bottom-[72px] right-0 left-0 z-40 hidden rounded-t-3xl bg-[#0b1826] p-5 text-white shadow-2xl lg:hidden">
         <div class="grid grid-cols-2 gap-3">
-
             @foreach ($secondaryMobileItems as $item)
                 <x-nav-link :href="$item['href']" variant="menu">{{ $item['label'] }}</x-nav-link>
             @endforeach
-
             <x-nav-link href="#" variant="menu">راهنما</x-nav-link>
-
         </div>
-
     </div>
 
 </div>
