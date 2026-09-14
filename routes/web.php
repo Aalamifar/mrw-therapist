@@ -8,6 +8,9 @@ use App\Http\Controllers\MessageAttachmentController;
 use App\Http\Controllers\ExamQuestionFileController;
 use App\Http\Controllers\SubmissionFileController;
 use App\Http\Controllers\ExamAnswerFileController;
+use App\Http\Controllers\CourseCheckoutController;
+use App\Http\Controllers\CourseAccessController;
+use App\Http\Controllers\OrderReceiptController;
 
 Route::middleware('guest')->group(function () {
     Volt::route('/', 'auth.login')->name('login');
@@ -49,6 +52,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Volt::route('/admin/classes/create', 'admin.create-class')->name('admin.classes.create');
     Volt::route('/admin/classes/{classId}/students', 'admin.manage-class-students')->name('admin.classes.students');
     Volt::route('/admin/users', 'admin.manage-users')->name('admin.users.index');
+    Volt::route('/admin/courses', 'admin.courses-index')->name('admin.courses.index');
+    Volt::route('/admin/courses/{courseId}/lessons', 'admin.course-lessons')->name('admin.courses.lessons');
+    Volt::route('/admin/orders', 'admin.course-orders')->name('admin.orders.index');
+    Route::get('/admin/orders/{order}/receipt', [OrderReceiptController::class, 'show'])->name('admin.orders.receipt');
 });
 
 Route::middleware(['auth', 'role:therapist'])->group(function () {
@@ -70,3 +77,13 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     Volt::route('/student/assignments', 'student.all-assignments')->name('student.assignments.index');
     Volt::route('/student/exams', 'student.all-exams')->name('student.exams.index');
 });
+
+Volt::route('/courses', 'public.courses-list')->name('courses.index');
+Route::get('/courses/{course}/checkout', [CourseCheckoutController::class, 'show'])->name('course.checkout');
+Route::post('/courses/{course}/checkout', [CourseCheckoutController::class, 'store'])->name('course.checkout.submit');
+Route::get('/course-access', [CourseAccessController::class, 'showForm'])->name('course.access.form');
+Route::post('/course-access', [CourseAccessController::class, 'checkCode'])->name('course.access.check');
+Route::get('/courses/{course}/view', [CourseAccessController::class, 'view'])->name('course.view');
+Route::get('/courses/{course}/file/{lessonId}/{path?}', [CourseAccessController::class, 'file'])
+    ->where('path', '.*')
+    ->name('course.file');

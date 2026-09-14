@@ -40,15 +40,39 @@ new class extends Component
 
 <div dir="rtl" class="min-h-screen bg-[#020b1c] text-white overflow-x-hidden">
     <!-- Navigation Bar -->
-    <nav class="fixed top-0 w-full bg-[#020b1c]/95 backdrop-blur-md border-b border-gray-800/50 z-50">
+   <nav class="fixed top-0 w-full bg-[#020b1c]/95 backdrop-blur-md border-b border-gray-800/50 z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex gap-6 text-sm">
+            <div class="flex items-center gap-6 text-sm">
                 <a href="#" class="text-yellow-500 hover:text-yellow-400 transition">صفحه اصلی</a>
-                <a href="#" class="text-gray-400 hover:text-white transition">درباره من</a>
-                <a href="#" class="text-gray-400 hover:text-white transition">مقالات</a>
                 <a href="#" class="text-gray-400 hover:text-white transition">سوالات متداول</a>
-                <a href="#" class="text-gray-400 hover:text-white transition">تماس با من</a>
+                <a href="#" class="text-gray-400 hover:text-white transition">تماس با ما</a>
+
+                {{-- محصولات (dropdown) --}}
+                <div x-data="{ open: false }" class="relative">
+                    <button @click="open = !open" @click.outside="open = false"
+                            class="flex items-center gap-1 text-gray-400 hover:text-white transition">
+                        محصولات
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 transition"
+                            :class="open ? 'rotate-180' : ''"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+
+                    <div x-show="open" x-transition x-cloak
+                        class="absolute right-0 mt-3 w-48 rounded-xl border border-gray-800 bg-[#0b1826] py-2 shadow-xl">
+                        <a href="{{ route('courses.index') }}"
+                        class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-yellow-500">
+                            دوره‌ها
+                        </a>
+                        <a href="{{ route('course.access.form') }}"
+                            class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-yellow-500">
+                            ورود به دوره
+                        </a>
+                    </div>
+                </div>
             </div>
+
             <button class="text-gray-400 hover:text-white text-2xl"></button>
         </div>
     </nav>

@@ -30,6 +30,8 @@
             ['href' => route('admin.users.create'), 'icon' => 'plus', 'label' => 'ساخت کاربر'],
             ['href' => route('admin.classes.create'), 'icon' => 'academic-cap', 'label' => 'ساخت کلاس'],
             ['href' => route('admin.users.index'), 'icon' => 'users', 'label' => 'مدیریت کاربران'],
+            ['href' => route('admin.courses.index'), 'icon' => 'shopping-bag', 'label' => 'دوره‌ها'],
+            ['href' => route('admin.orders.index'), 'icon' => 'clipboard-list', 'label' => 'سفارش‌ها'],
         ],
         'therapist' => [
             ['href' => route('therapist.classes'), 'icon' => 'book', 'label' => 'کلاس‌ها'],
@@ -109,7 +111,7 @@
             </div>
         </header>
 
-        <main class="px-4 py-6 sm:px-6 lg:px-8">
+        <main class="px-4 py-6 pb-28 sm:px-6 lg:px-8 lg:pb-6">
             {{ $slot }}
         </main>
     </div>
