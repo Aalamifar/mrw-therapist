@@ -77,8 +77,7 @@ new class extends Component
 
 <div class="space-y-6">
 
-    {{-- ═══════════ هدر با آمار ═══════════ --}}
-    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div class="flex items-center gap-3">
             <span class="grid h-12 w-12 place-items-center rounded-2xl bg-[#faf0d2] text-[#b98a10]">
                 <x-icon name="academic-cap" class="h-6 w-6" />
@@ -103,16 +102,13 @@ new class extends Component
         </button>
     </div>
 
-    {{-- ═══════════ فرم ساخت دوره ═══════════ --}}
-    @if ($showForm)
+        @if ($showForm)
         <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-5 shadow-sm sm:p-6">
             <form wire:submit="save" class="space-y-5">
 
                 <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
-                    {{-- ستون راست: اطلاعات --}}
-                    <div class="space-y-4">
-                        {{-- عنوان --}}
-                        <div>
+                                        <div class="space-y-4">
+                                                <div>
                             <label class="mb-1.5 block text-sm font-bold">عنوان دوره</label>
                             <input
                                 type="text"
@@ -123,8 +119,7 @@ new class extends Component
                             @error('title') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                         </div>
 
-                        {{-- توضیحات --}}
-                        <div>
+                                                <div>
                             <label class="mb-1.5 block text-sm font-bold">توضیحات</label>
                             <textarea
                                 wire:model="description"
@@ -135,8 +130,7 @@ new class extends Component
                             @error('description') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                         </div>
 
-                        {{-- قیمت --}}
-                        <div>
+                                                <div>
                             <label class="mb-1.5 block text-sm font-bold">قیمت (تومان)</label>
                             <div class="relative">
                                 <input
@@ -160,8 +154,7 @@ new class extends Component
                         </div>
                     </div>
 
-                    {{-- ستون چپ: آپلود تصویر --}}
-                    <div x-data="{
+                                        <div x-data="{
                         previewUrl: null,
                         updatePreview(event) {
                             const file = event.target.files[0];
@@ -180,8 +173,7 @@ new class extends Component
                         <label class="flex cursor-pointer flex-col items-center justify-center gap-2 overflow-hidden rounded-xl border-2 border-dashed border-[#e0d4bf] bg-white transition hover:border-[#d7a92b]/60 hover:bg-[#faf5ec]"
                                style="min-height: 240px;">
 
-                            {{-- Preview --}}
-                            <template x-if="previewUrl">
+                                                        <template x-if="previewUrl">
                                 <div class="relative h-full w-full">
                                     <img :src="previewUrl" class="h-full w-full object-cover" alt="پیش‌نمایش">
                                     <span class="absolute bottom-2 left-2 rounded-full bg-black/60 px-2.5 py-1 text-[10px] font-bold text-white">
@@ -190,8 +182,7 @@ new class extends Component
                                 </div>
                             </template>
 
-                            {{-- Placeholder --}}
-                            <template x-if="!previewUrl">
+                                                        <template x-if="!previewUrl">
                                 <div class="flex flex-col items-center gap-2 py-8 text-center">
                                     <span class="grid h-12 w-12 place-items-center rounded-2xl bg-[#faf0d2] text-[#b98a10]">
                                         <x-icon name="photo" class="h-6 w-6" />
@@ -235,8 +226,7 @@ new class extends Component
                     </div>
                 </div>
 
-                {{-- دکمه‌ها --}}
-                <div class="flex gap-2 pt-1">
+                                <div class="flex gap-2 pt-1">
                     <button
                         type="submit"
                         wire:loading.attr="disabled"
@@ -267,15 +257,13 @@ new class extends Component
         </div>
     @endif
 
-    {{-- ═══════════ گرید دوره‌ها ═══════════ --}}
-    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
         @forelse ($this->courses() as $course)
             <div
                 wire:key="course-{{ $course->id }}"
                 class="group flex flex-col overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm transition hover:-translate-y-0.5 hover:border-[#d7a92b]/40 hover:shadow-md"
             >
-                {{-- تصویر دوره (یا placeholder) --}}
-                <div class="relative aspect-video w-full overflow-hidden bg-[#faf0d2]/30">
+                                <div class="relative aspect-video w-full overflow-hidden bg-[#faf0d2]/30">
                     @if ($course->image)
                         <img
                             src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($course->image) }}"
@@ -290,8 +278,7 @@ new class extends Component
                         </div>
                     @endif
 
-                    {{-- Badge قیمت --}}
-                    @if ($course->price > 0)
+                                        @if ($course->price > 0)
                         <span class="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full bg-gradient-to-br from-[#f0d060] to-[#d7a92b] px-3 py-1 text-xs font-extrabold text-[#0b1826] shadow-md">
                             <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
@@ -306,8 +293,7 @@ new class extends Component
                     @endif
                 </div>
 
-                {{-- محتوا --}}
-                <div class="flex flex-1 flex-col p-5">
+                                <div class="flex flex-1 flex-col p-5">
                     <h3 class="line-clamp-1 text-base font-extrabold">{{ $course->title }}</h3>
 
                     @if ($course->description)
@@ -318,8 +304,7 @@ new class extends Component
                         <p class="mt-1.5 text-sm italic text-slate-400">بدون توضیحات</p>
                     @endif
 
-                    {{-- Badge تعداد محتوا --}}
-                    <div class="mt-3 flex flex-wrap items-center gap-1.5">
+                                        <div class="mt-3 flex flex-wrap items-center gap-1.5">
                         <span class="inline-flex items-center gap-1 rounded-md bg-[#f3e8fa] px-2 py-1 text-[10px] font-bold text-[#9333ea]">
                             <x-icon name="video" class="h-3 w-3" />
                             {{ $this->fa($course->lessons_count) }} محتوا
@@ -330,8 +315,7 @@ new class extends Component
                         </span>
                     </div>
 
-                    {{-- دکمه‌ها --}}
-                    <div class="mt-auto flex items-center gap-2 border-t border-[#f0e7dc] pt-4">
+                                        <div class="mt-auto flex items-center gap-2 border-t border-[#f0e7dc] pt-4">
                         <a
                             href="{{ route('admin.courses.lessons', $course->id) }}"
                             class="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#0b1826] px-3 py-2 text-sm font-bold text-[#e8c465] transition hover:bg-[#132840]"
@@ -351,8 +335,7 @@ new class extends Component
                 </div>
             </div>
         @empty
-            {{-- حالت خالی --}}
-            <div class="col-span-full flex flex-col items-center gap-4 rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] px-5 py-16 text-center shadow-sm">
+                        <div class="col-span-full flex flex-col items-center gap-4 rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] px-5 py-16 text-center shadow-sm">
                 <span class="grid h-16 w-16 place-items-center rounded-2xl bg-[#faf0d2] text-[#b98a10]">
                     <x-icon name="academic-cap" class="h-8 w-8" />
                 </span>

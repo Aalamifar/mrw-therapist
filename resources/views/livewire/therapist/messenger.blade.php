@@ -105,8 +105,7 @@ new class extends Component
 
 <div class="h-[calc(100vh-9rem)] rounded-2xl border border-slate-200 bg-white overflow-hidden flex">
 
-    {{-- SIDEBAR: لیست گفتگوها --}}
-    <aside class="flex flex-col border-l border-slate-200 bg-[#F7F6F3]/50 w-full sm:w-[320px] shrink-0 {{ $showChatOnMobile ? 'hidden sm:flex' : 'flex' }}">
+        <aside class="flex flex-col border-l border-slate-200 bg-[#F7F6F3]/50 w-full sm:w-[320px] shrink-0 {{ $showChatOnMobile ? 'hidden sm:flex' : 'flex' }}">
         <div class="p-4 border-b border-slate-200 bg-white">
             <div class="flex items-center justify-between mb-3">
                 <h2 class="text-lg font-bold text-[#061C32]">پیام‌ها</h2>
@@ -142,8 +141,7 @@ new class extends Component
                         : 0;
                 @endphp
 
-                {{-- ارسال به صورت رشته برای پایداری کامل --}}
-                <button 
+                                <button
                     wire:click="selectConversation('{{ $conversation->id }}')"
                     class="w-full flex items-center gap-3 px-4 py-3 text-right transition border-b border-slate-100
                            {{ $isActive ? 'bg-[#061C32]/5 border-r-2 border-r-[#E9C72A]' : 'hover:bg-slate-100/70' }}"
@@ -193,11 +191,9 @@ new class extends Component
         </div>
     </aside>
 
-    {{-- MAIN: ناحیه چت --}}
-    <main class="flex flex-1 flex-col min-w-0 {{ $showChatOnMobile ? 'flex' : 'hidden sm:flex' }}">
+        <main class="flex flex-1 flex-col min-w-0 {{ $showChatOnMobile ? 'flex' : 'hidden sm:flex' }}">
         
-        {{-- فراخوانی بدون پرانتز به دلیل استفاده از #[Computed] --}}
-        @if ($this->selectedConversationId && $this->selectedConversation)
+                @if ($this->selectedConversationId && $this->selectedConversation)
             @php
                 $otherUser = $this->otherUser;
                 $messages = $this->messages;

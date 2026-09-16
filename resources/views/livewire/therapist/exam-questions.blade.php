@@ -93,8 +93,7 @@ new class extends Component
 
 <div class="space-y-6" x-data="{ open: {} }">
 
-    {{-- ═══════════ بازگشت ═══════════ --}}
-    <a
+        <a
         href="{{ route('therapist.classes.show', $exam->class_id) }}"
         class="inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-sm text-slate-500 transition hover:bg-[#faf5ec] hover:text-slate-700"
     >
@@ -102,8 +101,7 @@ new class extends Component
         بازگشت به کلاس
     </a>
 
-    {{-- ═══════════ هدر آزمون ═══════════ --}}
-    <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-6 shadow-sm sm:p-8">
+        <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-6 shadow-sm sm:p-8">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div class="flex items-start gap-4">
                 <span class="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-[#fdeaea] text-[#dc2626]">
@@ -135,13 +133,11 @@ new class extends Component
         </div>
     </div>
 
-    {{-- ═══════════ فرم افزودن سؤال ═══════════ --}}
-    @if ($showForm)
+        @if ($showForm)
         <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-5 shadow-sm sm:p-6">
             <form wire:submit="saveQuestion" class="space-y-5">
 
-                {{-- نوع سؤال --}}
-                <div>
+                                <div>
                     <label class="mb-1.5 block text-sm font-bold">نوع سؤال</label>
                     <div class="grid grid-cols-2 gap-2">
                         @foreach ([
@@ -159,8 +155,7 @@ new class extends Component
                     </div>
                 </div>
 
-                {{-- متن سؤال --}}
-                <div>
+                                <div>
                     <label class="mb-1.5 block text-sm font-bold">متن سؤال</label>
                     <textarea
                         wire:model="question"
@@ -171,8 +166,7 @@ new class extends Component
                     @error('question') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                 </div>
 
-                {{-- گزینه‌ها --}}
-                @if ($type === 'multiple_choice')
+                                @if ($type === 'multiple_choice')
                     <div class="space-y-2">
                         <label class="block text-sm font-bold">
                             گزینه‌ها
@@ -215,8 +209,7 @@ new class extends Component
                     </div>
                 @endif
 
-                {{-- امتیاز + فایل --}}
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
                         <label class="mb-1.5 block text-sm font-bold">امتیاز این سؤال</label>
                         <input
@@ -252,8 +245,7 @@ new class extends Component
                     </div>
                 </div>
 
-                {{-- دکمه‌ها --}}
-                <div class="flex gap-2 pt-1">
+                                <div class="flex gap-2 pt-1">
                     <button
                         type="submit"
                         wire:loading.attr="disabled"
@@ -284,14 +276,12 @@ new class extends Component
         </div>
     @endif
 
-    {{-- ═══════════ لیست سؤالات ═══════════ --}}
-    <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
+        <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
         @forelse ($exam->questions as $index => $q)
             <div wire:key="question-{{ $q->id }}" class="border-b border-[#f0e7dc] px-5 py-4 transition last:border-b-0 hover:bg-[#faf5ec]">
                 <div class="flex items-start justify-between gap-4">
                     <div class="flex min-w-0 flex-1 gap-3">
-                        {{-- شماره سؤال --}}
-                        <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#faf0d2] text-sm font-extrabold text-[#b98a10]">
+                                                <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#faf0d2] text-sm font-extrabold text-[#b98a10]">
                             {{ $this->fa($index + 1) }}
                         </span>
 
@@ -319,8 +309,7 @@ new class extends Component
                                 </button>
                             </div>
 
-                            {{-- جزئیات --}}
-                            <div x-show="open['{{ $q->id }}']" x-cloak x-collapse class="mt-3 space-y-2 rounded-xl border border-[#eee4d9] bg-white p-4">
+                                                        <div x-show="open['{{ $q->id }}']" x-cloak x-collapse class="mt-3 space-y-2 rounded-xl border border-[#eee4d9] bg-white p-4">
                                 @if ($q->type === 'multiple_choice')
                                     <ul class="space-y-1.5 text-sm">
                                         @foreach ($q->options as $opt)
@@ -350,8 +339,7 @@ new class extends Component
                         </div>
                     </div>
 
-                    {{-- حذف --}}
-                    <button
+                                        <button
                         wire:click="deleteQuestion({{ $q->id }})"
                         wire:confirm="مطمئنی می‌خوای این سؤال رو حذف کنی؟"
                         class="shrink-0 rounded-xl p-2 text-red-600 transition hover:bg-red-50"

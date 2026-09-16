@@ -102,8 +102,7 @@ new class extends Component
     }"
 >
 
-    {{-- ═══════════ هدر با آمار ═══════════ --}}
-    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div class="flex items-center gap-3">
             <span class="grid h-12 w-12 place-items-center rounded-2xl bg-[#faf0d2] text-[#b98a10]">
                 <x-icon name="inbox" class="h-6 w-6" />
@@ -120,8 +119,7 @@ new class extends Component
         </div>
     </div>
 
-    {{-- ═══════════ فیلتر وضعیت (Pills) ═══════════ --}}
-    <div class="overflow-x-auto rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-2 shadow-sm">
+        <div class="overflow-x-auto rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-2 shadow-sm">
         <div class="flex gap-2">
             @foreach ([
                 'pending'  => ['در انتظار', 'clock', $counts['pending']],
@@ -143,8 +141,7 @@ new class extends Component
         </div>
     </div>
 
-    {{-- ═══════════ لیست سفارش‌ها ═══════════ --}}
-    <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
+        <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
 
         @forelse ($this->orders() as $order)
             @php
@@ -158,11 +155,9 @@ new class extends Component
             >
                 <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
 
-                    {{-- اطلاعات سفارش --}}
-                    <div class="flex min-w-0 flex-1 items-start gap-3">
+                                        <div class="flex min-w-0 flex-1 items-start gap-3">
 
-                        {{-- Thumbnail رسید (قابل کلیک برای پیش‌نمایش) --}}
-                        @if ($order->receipt_image)
+                                                @if ($order->receipt_image)
                             <button
                                 type="button"
                                 @click="openPreview('{{ $receiptUrl }}')"
@@ -186,10 +181,8 @@ new class extends Component
                             </span>
                         @endif
 
-                        {{-- جزئیات --}}
-                        <div class="min-w-0 flex-1">
-                            {{-- نام دوره + badge وضعیت --}}
-                            <div class="flex flex-wrap items-center gap-2">
+                                                <div class="min-w-0 flex-1">
+                                                        <div class="flex flex-wrap items-center gap-2">
                                 <h3 class="text-base font-extrabold">{{ $order->course->title ?? 'دوره حذف شده' }}</h3>
                                 <span class="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-bold {{ $status['class'] }}">
                                     <span class="h-1.5 w-1.5 rounded-full {{ $status['dot'] }}"></span>
@@ -197,8 +190,7 @@ new class extends Component
                                 </span>
                             </div>
 
-                            {{-- خریدار --}}
-                            <div class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
+                                                        <div class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
                                 <span class="inline-flex items-center gap-1 text-slate-600">
                                     <x-icon name="user" class="h-3.5 w-3.5 text-[#b98a10]" />
                                     <b class="font-bold text-slate-700">{{ $order->buyer_name }}</b>
@@ -213,8 +205,7 @@ new class extends Component
                                 </span>
                             </div>
 
-                            {{-- مبلغ + کد --}}
-                            <div class="mt-2 flex flex-wrap items-center gap-2">
+                                                        <div class="mt-2 flex flex-wrap items-center gap-2">
                                 @if ($order->course && $order->course->price > 0)
                                     <span class="inline-flex items-center gap-1 rounded-md bg-[#faf0d2] px-2 py-0.5 text-xs font-bold text-[#b98a10]">
                                         <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -231,8 +222,7 @@ new class extends Component
                         </div>
                     </div>
 
-                    {{-- دکمه‌های عملیات --}}
-                    <div class="flex shrink-0 flex-wrap items-center gap-2 sm:flex-col sm:items-end">
+                                        <div class="flex shrink-0 flex-wrap items-center gap-2 sm:flex-col sm:items-end">
                         @if ($order->status === 'pending')
                             <button
                                 wire:click="approve({{ $order->id }})"
@@ -264,8 +254,7 @@ new class extends Component
                 </div>
             </div>
         @empty
-            {{-- حالت خالی --}}
-            <div class="flex flex-col items-center gap-4 px-5 py-16 text-center">
+                        <div class="flex flex-col items-center gap-4 px-5 py-16 text-center">
                 <span class="grid h-16 w-16 place-items-center rounded-2xl bg-[#faf0d2] text-[#b98a10]">
                     <x-icon name="inbox" class="h-8 w-8" />
                 </span>
@@ -287,8 +276,7 @@ new class extends Component
         @endforelse
     </div>
 
-    {{-- ═══════════ Modal پیش‌نمایش رسید ═══════════ --}}
-    <div
+        <div
         x-show="previewOpen"
         x-cloak
         class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"

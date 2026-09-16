@@ -78,8 +78,7 @@ new class extends Component
 
 <div class="space-y-6">
 
-    {{-- ═══════════ هدر با آمار ═══════════ --}}
-    <div class="flex items-center gap-3">
+        <div class="flex items-center gap-3">
         <span class="grid h-12 w-12 place-items-center rounded-2xl {{ $tone['bg'] }} {{ $tone['text'] }}">
             <x-icon name="{{ $tone['icon'] }}" class="h-6 w-6" />
         </span>
@@ -91,18 +90,15 @@ new class extends Component
         </div>
     </div>
 
-    {{-- ═══════════ لیست محتوا ═══════════ --}}
-    <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
+        <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
 
         @forelse ($this->lessons() as $i => $lesson)
             <div
                 wire:key="lesson-{{ $lesson->id }}"
                 class="border-b border-[#f0e7dc] p-5 transition last:border-b-0 hover:bg-[#faf5ec] sm:p-6"
             >
-                {{-- هدر درس --}}
-                <div class="flex items-start gap-3">
-                    {{-- شماره + آواتار --}}
-                    <div class="flex shrink-0 flex-col items-center gap-1.5">
+                                <div class="flex items-start gap-3">
+                                        <div class="flex shrink-0 flex-col items-center gap-1.5">
                         <span class="grid h-8 w-8 place-items-center rounded-lg bg-[#faf0d2] text-xs font-extrabold text-[#b98a10]">
                             {{ $this->fa($i + 1) }}
                         </span>
@@ -111,8 +107,7 @@ new class extends Component
                         </span>
                     </div>
 
-                    {{-- عنوان + توضیح + badge --}}
-                    <div class="min-w-0 flex-1">
+                                        <div class="min-w-0 flex-1">
                         <div class="flex flex-wrap items-center gap-2">
                             <h3 class="text-base font-extrabold">{{ $lesson->title }}</h3>
                             <span class="rounded-md px-2 py-0.5 text-[10px] font-bold {{ $tone['bg'] }} {{ $tone['text'] }}">
@@ -126,11 +121,9 @@ new class extends Component
                     </div>
                 </div>
 
-                {{-- ═══════════ پخش‌کننده ═══════════ --}}
-                <div class="mt-4">
+                                <div class="mt-4">
 
-                    {{-- فیلم --}}
-                    @if ($lesson->type === 'video')
+                                        @if ($lesson->type === 'video')
                         <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-black shadow-sm">
                             <video
                                 controls
@@ -145,15 +138,13 @@ new class extends Component
                             </video>
                         </div>
 
-                        {{-- نکته محافظت --}}
-                        <div class="mt-2 flex items-center gap-1.5 text-[10px] text-slate-400">
+                                                <div class="mt-2 flex items-center gap-1.5 text-[10px] text-slate-400">
                             <x-icon name="lock" class="h-3 w-3" />
                             دانلود غیرفعال است — فقط پخش آنلاین
                         </div>
                     @endif
 
-                    {{-- جزوه PDF --}}
-                    @if ($lesson->type === 'note')
+                                        @if ($lesson->type === 'note')
                         <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-white shadow-sm" oncontextmenu="return false;">
                             <iframe
                                 src="{{ route('lesson.file', $lesson->id) }}#toolbar=0&navpanes=0&scrollbar=0"
@@ -162,15 +153,13 @@ new class extends Component
                             ></iframe>
                         </div>
 
-                        {{-- نکته محافظت --}}
-                        <div class="mt-2 flex items-center gap-1.5 text-[10px] text-slate-400">
+                                                <div class="mt-2 flex items-center gap-1.5 text-[10px] text-slate-400">
                             <x-icon name="lock" class="h-3 w-3" />
                             محتوا حفاظت شده است — فقط قابل مشاهده
                         </div>
                     @endif
 
-                    {{-- بازی HTML --}}
-                    @if ($lesson->type === 'html_game')
+                                        @if ($lesson->type === 'html_game')
                         <div class="flex flex-col items-center gap-4 rounded-2xl border-2 border-dashed border-[#e0d4bf] bg-[#faf5ec]/50 p-8 text-center">
                             <span class="grid h-16 w-16 place-items-center rounded-2xl bg-gradient-to-br from-[#f0d060] to-[#d7a92b] text-[#0b1826] shadow-md">
                                 <x-icon name="sparkles" class="h-8 w-8" />
@@ -193,8 +182,7 @@ new class extends Component
                 </div>
             </div>
         @empty
-            {{-- حالت خالی --}}
-            <div class="flex flex-col items-center gap-4 px-5 py-16 text-center">
+                        <div class="flex flex-col items-center gap-4 px-5 py-16 text-center">
                 <span class="grid h-16 w-16 place-items-center rounded-2xl {{ $tone['bg'] }} {{ $tone['text'] }}">
                     <x-icon name="{{ $tone['icon'] }}" class="h-8 w-8" />
                 </span>

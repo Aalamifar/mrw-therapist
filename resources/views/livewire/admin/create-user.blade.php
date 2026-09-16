@@ -36,8 +36,7 @@ new class extends Component
 
 <div class="mx-auto max-w-lg space-y-5">
 
-    {{-- ═══════════ بازگشت ═══════════ --}}
-    <a
+        <a
         href="{{ route('admin.dashboard') }}"
         class="inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-sm text-slate-500 transition hover:bg-[#faf5ec] hover:text-slate-700"
     >
@@ -45,11 +44,9 @@ new class extends Component
         بازگشت
     </a>
 
-    {{-- ═══════════ کارت اصلی ═══════════ --}}
-    <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-6 shadow-sm sm:p-8">
+        <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-6 shadow-sm sm:p-8">
 
-        {{-- هدر با آیکون پاستلی --}}
-        <div class="flex items-start gap-4">
+                <div class="flex items-start gap-4">
             <span class="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-[#faf0d2] text-[#b98a10]">
                 <x-icon name="user" class="h-7 w-7" />
             </span>
@@ -59,19 +56,16 @@ new class extends Component
             </div>
         </div>
 
-        {{-- پیام موفقیت --}}
-        @if ($successMessage)
+                @if ($successMessage)
             <div class="mt-6 flex items-center gap-2 rounded-xl bg-[#e2f6e7] px-3 py-2.5 text-sm font-medium text-[#16a34a]">
                 <x-icon name="check-circle" class="h-4 w-4 shrink-0" />
                 {{ $successMessage }}
             </div>
         @endif
 
-        {{-- فرم --}}
-        <form wire:submit="createUser" class="mt-6 space-y-5">
+                <form wire:submit="createUser" class="mt-6 space-y-5">
 
-            {{-- نام و نام خانوادگی --}}
-            <div>
+                        <div>
                 <label class="mb-1.5 block text-sm font-bold">نام و نام خانوادگی</label>
                 <div class="relative">
                     <x-icon name="user" class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#b98a10]" />
@@ -85,8 +79,7 @@ new class extends Component
                 @error('name') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
             </div>
 
-            {{-- شماره تلفن --}}
-            <div>
+                        <div>
                 <label class="mb-1.5 block text-sm font-bold">شماره تلفن</label>
                 <div class="relative">
                     <x-icon name="phone" class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#b98a10]" />
@@ -102,8 +95,7 @@ new class extends Component
                 @error('phone') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
             </div>
 
-            {{-- رمز عبور --}}
-            <div>
+                        <div>
                 <label class="mb-1.5 block text-sm font-bold">رمز عبور</label>
                 <div class="relative">
                     <x-icon name="lock" class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#b98a10]" />
@@ -126,8 +118,7 @@ new class extends Component
                 @error('password') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
             </div>
 
-            {{-- نقش کاربر --}}
-            <div>
+                        <div>
                 <label class="mb-1.5 block text-sm font-bold">نقش کاربر</label>
                 <div class="grid grid-cols-3 gap-2">
                     @foreach ([
@@ -147,8 +138,7 @@ new class extends Component
                 @error('role') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
             </div>
 
-            {{-- دکمه submit --}}
-            <button
+                        <button
                 type="submit"
                 wire:loading.attr="disabled"
                 wire:target="createUser"
@@ -169,8 +159,7 @@ new class extends Component
         </form>
     </div>
 
-    {{-- ═══════════ نکته راهنما ═══════════ --}}
-    <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8]/60 px-5 py-4 shadow-sm">
+        <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8]/60 px-5 py-4 shadow-sm">
         <div class="flex items-start gap-3">
             <x-icon name="sparkles" class="h-5 w-5 shrink-0 text-[#d7a92b]" />
             <p class="text-xs leading-relaxed text-slate-500">

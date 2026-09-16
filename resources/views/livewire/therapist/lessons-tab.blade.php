@@ -115,8 +115,7 @@ new class extends Component
 
 <div class="space-y-5">
 
-    {{-- ═══════════ هدر با آمار ═══════════ --}}
-    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div class="flex items-center gap-3">
             <span class="grid h-12 w-12 place-items-center rounded-2xl {{ $tone['bg'] }} {{ $tone['text'] }}">
                 <x-icon name="{{ $tone['icon'] }}" class="h-6 w-6" />
@@ -138,13 +137,11 @@ new class extends Component
         </button>
     </div>
 
-    {{-- ═══════════ فرم افزودن ═══════════ --}}
-    @if ($showForm)
+        @if ($showForm)
         <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-5 shadow-sm sm:p-6">
             <form wire:submit="save" class="space-y-4">
 
-                {{-- عنوان --}}
-                <div>
+                                <div>
                     <label class="mb-1.5 block text-sm font-bold">عنوان</label>
                     <input
                         type="text"
@@ -155,8 +152,7 @@ new class extends Component
                     @error('title') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                 </div>
 
-                {{-- توضیحات --}}
-                <div>
+                                <div>
                     <label class="mb-1.5 block text-sm font-bold">توضیحات (اختیاری)</label>
                     <textarea
                         wire:model="description"
@@ -167,8 +163,7 @@ new class extends Component
                     @error('description') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                 </div>
 
-                {{-- فایل --}}
-                <div>
+                                <div>
                     <label class="mb-1.5 block text-sm font-bold">
                         {{ $type === 'video' ? 'فایل ویدیو' : 'فایل PDF' }}
                     </label>
@@ -200,8 +195,7 @@ new class extends Component
                         @endif
                     </label>
 
-                    {{-- loading آپلود --}}
-                    <div wire:loading wire:target="file" class="mt-1.5 flex items-center gap-1.5 text-xs text-slate-500">
+                                        <div wire:loading wire:target="file" class="mt-1.5 flex items-center gap-1.5 text-xs text-slate-500">
                         <svg class="h-3.5 w-3.5 animate-spin text-[#b98a10]" viewBox="0 0 24 24" fill="none">
                             <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-opacity="0.25" stroke-width="3"/>
                             <path d="M22 12a10 10 0 0 1-10 10" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
@@ -212,8 +206,7 @@ new class extends Component
                     @error('file') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
                 </div>
 
-                {{-- دکمه‌ها --}}
-                <div class="flex gap-2 pt-1">
+                                <div class="flex gap-2 pt-1">
                     <button
                         type="submit"
                         wire:loading.attr="disabled"
@@ -244,21 +237,18 @@ new class extends Component
         </div>
     @endif
 
-    {{-- ═══════════ لیست ═══════════ --}}
-    <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
+        <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
         @forelse ($this->lessons() as $lesson)
             <div
                 wire:key="lesson-{{ $lesson->id }}"
                 class="flex flex-col gap-3 border-b border-[#f0e7dc] px-5 py-4 transition last:border-b-0 hover:bg-[#faf5ec] sm:flex-row sm:items-center sm:justify-between"
             >
                 <div class="flex min-w-0 flex-1 items-start gap-3">
-                    {{-- آواتار --}}
-                    <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl {{ $tone['bg'] }} {{ $tone['text'] }}">
+                                        <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl {{ $tone['bg'] }} {{ $tone['text'] }}">
                         <x-icon name="{{ $tone['icon'] }}" class="h-5 w-5" />
                     </span>
 
-                    {{-- اطلاعات --}}
-                    <div class="min-w-0 flex-1">
+                                        <div class="min-w-0 flex-1">
                         <div class="flex flex-wrap items-center gap-2">
                             <span class="truncate font-bold">{{ $lesson->title }}</span>
                             <span class="rounded-md px-2 py-0.5 text-xs font-bold {{ $tone['bg'] }} {{ $tone['text'] }}">
@@ -272,8 +262,7 @@ new class extends Component
                     </div>
                 </div>
 
-                {{-- دکمه‌های عملیات --}}
-                <div class="flex shrink-0 items-center gap-1">
+                                <div class="flex shrink-0 items-center gap-1">
                     <a
                         href="{{ route('lesson.file', $lesson->id) }}"
                         target="_blank"
@@ -293,8 +282,7 @@ new class extends Component
                 </div>
             </div>
         @empty
-            {{-- حالت خالی --}}
-            <div class="flex flex-col items-center gap-4 px-5 py-16 text-center">
+                        <div class="flex flex-col items-center gap-4 px-5 py-16 text-center">
                 <span class="grid h-16 w-16 place-items-center rounded-2xl {{ $tone['bg'] }} {{ $tone['text'] }}">
                     <x-icon name="{{ $tone['icon'] }}" class="h-8 w-8" />
                 </span>

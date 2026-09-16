@@ -30,8 +30,7 @@ new #[Layout('components.layouts.guest')] class extends Component
 
 <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
 
-    {{-- ═══════════ هدر ═══════════ --}}
-    <div class="mb-8 flex items-center gap-3">
+        <div class="mb-8 flex items-center gap-3">
         <span class="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-[#f0d060] to-[#d7a92b] text-[#0b1826] shadow-md">
             <x-icon name="academic-cap" class="h-6 w-6" />
         </span>
@@ -43,16 +42,14 @@ new #[Layout('components.layouts.guest')] class extends Component
         </div>
     </div>
 
-    {{-- ═══════════ گرید دوره‌ها ═══════════ --}}
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
         @forelse ($this->courses() as $course)
             <a
                 href="{{ route('course.checkout', $course->id) }}"
                 class="group flex flex-col overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm transition hover:-translate-y-1 hover:border-[#d7a92b]/40 hover:shadow-lg"
             >
-                {{-- تصویر دوره (یا placeholder) --}}
-                <div class="relative aspect-video w-full overflow-hidden bg-[#faf0d2]/30">
+                                <div class="relative aspect-video w-full overflow-hidden bg-[#faf0d2]/30">
                     @if ($course->image)
                         <img
                             src="{{ asset('storage/' . $course->image) }}"
@@ -67,8 +64,7 @@ new #[Layout('components.layouts.guest')] class extends Component
                         </div>
                     @endif
 
-                    {{-- Badge قیمت --}}
-                    @if ($course->price > 0)
+                                        @if ($course->price > 0)
                         <span class="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full bg-gradient-to-br from-[#f0d060] to-[#d7a92b] px-3 py-1.5 text-xs font-extrabold text-[#0b1826] shadow-md">
                             <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
@@ -82,8 +78,7 @@ new #[Layout('components.layouts.guest')] class extends Component
                         </span>
                     @endif
 
-                    {{-- Badge تعداد محتوا --}}
-                    @if ($course->lessons_count > 0)
+                                        @if ($course->lessons_count > 0)
                         <span class="absolute bottom-3 left-3 inline-flex items-center gap-1 rounded-full bg-black/60 px-2.5 py-1 text-[10px] font-bold text-white backdrop-blur-sm">
                             <x-icon name="video" class="h-3 w-3" />
                             {{ $this->fa($course->lessons_count) }} محتوا
@@ -91,8 +86,7 @@ new #[Layout('components.layouts.guest')] class extends Component
                     @endif
                 </div>
 
-                {{-- محتوا --}}
-                <div class="flex flex-1 flex-col p-5">
+                                <div class="flex flex-1 flex-col p-5">
                     <h3 class="line-clamp-1 text-base font-extrabold transition group-hover:text-[#b98a10]">
                         {{ $course->title }}
                     </h3>
@@ -107,8 +101,7 @@ new #[Layout('components.layouts.guest')] class extends Component
                         </p>
                     @endif
 
-                    {{-- دکمه خرید --}}
-                    <div class="mt-5 flex items-center justify-between gap-3 border-t border-[#f0e7dc] pt-4">
+                                        <div class="mt-5 flex items-center justify-between gap-3 border-t border-[#f0e7dc] pt-4">
                         <div>
                             <div class="text-[10px] text-slate-400">قیمت دوره</div>
                             <div class="mt-0.5 text-base font-extrabold text-[#b98a10]">
@@ -129,8 +122,7 @@ new #[Layout('components.layouts.guest')] class extends Component
                 </div>
             </a>
         @empty
-            {{-- حالت خالی --}}
-            <div class="col-span-full flex flex-col items-center gap-4 rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] px-5 py-20 text-center shadow-sm">
+                        <div class="col-span-full flex flex-col items-center gap-4 rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] px-5 py-20 text-center shadow-sm">
                 <span class="grid h-20 w-20 place-items-center rounded-2xl bg-gradient-to-br from-[#f0d060] to-[#d7a92b] text-[#0b1826] shadow-md">
                     <x-icon name="academic-cap" class="h-10 w-10" />
                 </span>

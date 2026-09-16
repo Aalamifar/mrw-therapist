@@ -59,8 +59,7 @@ new class extends Component
 
 <div class="space-y-6">
 
-    {{-- ═══════════ هدر ═══════════ --}}
-    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
             <h1 class="text-2xl font-extrabold">کلاس‌های من</h1>
             <p class="mt-1 text-sm text-slate-500">مدیریت کلاس‌های اختصاص یافته به شما</p>
@@ -84,8 +83,7 @@ new class extends Component
         </div>
     </div>
 
-    {{-- ═══════════ جستجو ═══════════ --}}
-    <div class="relative w-full sm:max-w-sm">
+        <div class="relative w-full sm:max-w-sm">
         <x-icon name="search" class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#b98a10]" />
         <input
             type="text"
@@ -95,16 +93,14 @@ new class extends Component
         >
     </div>
 
-    {{-- ═══════════ لیست کلاس‌ها ═══════════ --}}
-    <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
+        <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
 
         @forelse ($this->classes() as $class)
             <div
                 wire:key="class-{{ $class->id }}"
                 class="flex flex-col gap-3 border-b border-[#f0e7dc] px-4 py-4 transition last:border-b-0 hover:bg-[#faf5ec] sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-4 sm:px-5"
             >
-                {{-- اطلاعات کلاس + آواتار --}}
-                <div class="flex min-w-0 flex-1 items-center gap-3">
+                                <div class="flex min-w-0 flex-1 items-center gap-3">
                     <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#faf0d2] text-[#b98a10]">
                         <x-icon name="academic-cap" class="h-5 w-5" />
                     </span>
@@ -121,8 +117,7 @@ new class extends Component
                     </div>
                 </div>
 
-                {{-- دکمه‌های عملیات --}}
-                <div class="flex shrink-0 items-center gap-1">
+                                <div class="flex shrink-0 items-center gap-1">
                     <button
                         wire:click="showStudents({{ $class->id }})"
                         class="inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-[#f0e7dc] sm:px-3"
@@ -160,8 +155,7 @@ new class extends Component
         @endforelse
     </div>
 
-    {{-- ═══════════ Modal دانش‌آموزان ═══════════ --}}
-    @if ($selectedClassId)
+        @if ($selectedClassId)
         @php
             $class = $this->selectedClass();
             $students = $class?->students ?? collect();
@@ -174,8 +168,7 @@ new class extends Component
         >
             <div class="w-full max-w-2xl overflow-hidden rounded-t-3xl bg-[#fdfbf8] shadow-2xl sm:rounded-2xl">
 
-                {{-- Modal Header --}}
-                <div class="flex items-center gap-4 border-b border-[#f0e7dc] px-6 py-4">
+                                <div class="flex items-center gap-4 border-b border-[#f0e7dc] px-6 py-4">
                     <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-[#faf0d2] text-[#b98a10]">
                         <x-icon name="academic-cap" class="h-6 w-6" />
                     </span>
@@ -196,14 +189,12 @@ new class extends Component
                     </button>
                 </div>
 
-                {{-- Modal Body --}}
-                <div class="max-h-[60vh] overflow-y-auto p-6">
+                                <div class="max-h-[60vh] overflow-y-auto p-6">
                     @if ($students->isNotEmpty())
                         <div class="grid gap-3 sm:grid-cols-2">
                             @foreach ($students as $student)
                                 <div class="flex items-center gap-3 rounded-xl border border-[#eee4d9] bg-white px-4 py-3 transition hover:border-[#d7a92b]/50 hover:shadow-sm">
-                                    {{-- اطلاعات دانش‌آموز --}}
-                                    <div class="flex min-w-0 flex-1 items-center gap-3">
+                                                                        <div class="flex min-w-0 flex-1 items-center gap-3">
                                         <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full text-sm font-extrabold {{ $this->avatarTone($student->id) }}">
                                             {{ mb_substr($student->name ?? ($student->first_name ?? 'ک'), 0, 1) }}
                                         </span>
@@ -219,8 +210,7 @@ new class extends Component
                                         </div>
                                     </div>
 
-                                    {{-- دکمه ارسال پیام --}}
-                                    <a
+                                                                        <a
                                         href="{{ route('therapist.messenger', ['user_id' => $student->id]) }}"
                                         class="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-[#f3e8fa] px-3 py-2 text-xs font-bold text-[#9333ea] transition hover:bg-[#e9d5f7]"
                                         title="ارسال پیام به این دانش‌آموز"
@@ -246,8 +236,7 @@ new class extends Component
                     @endif
                 </div>
 
-                {{-- Modal Footer --}}
-                <div class="flex justify-end border-t border-[#f0e7dc] bg-[#faf5ec]/50 px-6 py-4">
+                                <div class="flex justify-end border-t border-[#f0e7dc] bg-[#faf5ec]/50 px-6 py-4">
                     <button
                         wire:click="closeStudents"
                         class="rounded-xl border border-[#eee4d9] bg-white px-5 py-2 text-sm font-bold text-slate-700 shadow-sm transition hover:bg-[#f0e7dc]"

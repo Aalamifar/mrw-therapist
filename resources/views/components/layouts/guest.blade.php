@@ -47,12 +47,10 @@
 
 <div x-data="{ mobileMenu: false }" class="flex min-h-screen flex-col">
 
-    {{-- ═══════════ هدر ═══════════ --}}
-    <header class="sticky top-0 z-50 border-b border-[#eee4d9] bg-[#fdfbf8]/95 shadow-sm backdrop-blur">
+        <header class="sticky top-0 z-50 border-b border-[#eee4d9] bg-[#fdfbf8]/95 shadow-sm backdrop-blur">
         <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
 
-            {{-- لوگو --}}
-            <a href="{{ $homeRoute }}" class="flex items-center gap-3">
+                        <a href="{{ $homeRoute }}" class="flex items-center gap-3">
                 <img
                     src="{{ asset('img/logo.png') }}"
                     alt="لوگوی MRW"
@@ -64,8 +62,7 @@
                 </span>
             </a>
 
-            {{-- ناوبری دسکتاپ --}}
-            <nav class="hidden items-center gap-1 md:flex">
+                        <nav class="hidden items-center gap-1 md:flex">
                 @foreach ($navLinks as $link)
                     <a
                         href="{{ $link['href'] }}"
@@ -90,8 +87,7 @@
                 @endauth
             </nav>
 
-            {{-- دکمه منوی موبایل --}}
-            <button
+                        <button
                 type="button"
                 @click="mobileMenu = !mobileMenu"
                 class="grid h-10 w-10 place-items-center rounded-xl border border-[#eee4d9] bg-white text-slate-600 shadow-sm transition hover:bg-[#faf5ec] md:hidden"
@@ -101,8 +97,7 @@
             </button>
         </div>
 
-        {{-- منوی موبایل --}}
-        <div
+                <div
             x-show="mobileMenu"
             x-cloak
             x-transition.opacity.duration.200ms
@@ -136,17 +131,14 @@
         </div>
     </header>
 
-    {{-- ═══════════ محتوا ═══════════ --}}
-    <main class="flex-1">
+        <main class="flex-1">
         {{ $slot }}
     </main>
 
-    {{-- ═══════════ فوتر ═══════════ --}}
-    <footer class="mt-16 bg-[#0b1826] text-slate-300">
+        <footer class="mt-16 bg-[#0b1826] text-slate-300">
         <div class="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:grid-cols-2 sm:px-6 lg:grid-cols-3 lg:px-8">
 
-            {{-- درباره --}}
-            <div>
+                        <div>
                 <div class="flex items-center gap-3">
                     <img src="{{ asset('img/logo.png') }}" alt="MRW" class="h-10 w-10 rounded-xl ring-1 ring-white/10">
                     <div>
@@ -160,8 +152,7 @@
                 </p>
             </div>
 
-            {{-- لینک‌های سریع --}}
-            <div>
+                        <div>
                 <h4 class="mb-3 text-xs font-extrabold text-[#e8c465]">دسترسی سریع</h4>
                 <ul class="space-y-2 text-xs">
                     @foreach ($navLinks as $link)
@@ -175,8 +166,7 @@
                 </ul>
             </div>
 
-            {{-- پشتیبانی --}}
-            <div>
+                        <div>
                 <h4 class="mb-3 text-xs font-extrabold text-[#e8c465]">پشتیبانی</h4>
                 <ul class="space-y-2 text-xs text-slate-400">
                     <li class="flex items-center gap-2">
@@ -195,8 +185,7 @@
             </div>
         </div>
 
-        {{-- کپی‌رایت --}}
-        <div class="border-t border-white/10 px-4 py-4 text-center text-[10px] text-slate-500">
+                <div class="border-t border-white/10 px-4 py-4 text-center text-[10px] text-slate-500">
             © {{ now()->format('Y') }} — تمامی حقوق برای MRW Therapist محفوظ است.
         </div>
     </footer>

@@ -367,12 +367,10 @@ new class extends Component
 
 <div class="h-[calc(100vh-9rem)] overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm flex">
 
-    {{-- ═══════════ SIDEBAR ═══════════ --}}
-    <aside
+        <aside
         class="flex w-full shrink-0 flex-col border-l border-[#eee4d9] bg-[#faf5ec]/40 sm:w-[340px] {{ $showChatOnMobile ? 'hidden sm:flex' : 'flex' }}"
     >
-        {{-- Header --}}
-        <div class="border-b border-[#eee4d9] bg-[#fdfbf8] p-4">
+                <div class="border-b border-[#eee4d9] bg-[#fdfbf8] p-4">
             <div class="mb-3 flex items-center justify-between">
                 <div class="flex items-center gap-2.5">
                     <span class="grid h-10 w-10 place-items-center rounded-xl bg-[#f3e8fa] text-[#9333ea]">
@@ -406,8 +404,7 @@ new class extends Component
             </div>
         </div>
 
-        {{-- List --}}
-        <div class="flex-1 overflow-y-auto">
+                <div class="flex-1 overflow-y-auto">
             @forelse ($this->conversations as $conversation)
                 @php
                     $currentUserId = auth()->id();
@@ -503,12 +500,10 @@ new class extends Component
         </div>
     </aside>
 
-    {{-- ═══════════ MAIN ═══════════ --}}
-    <main class="flex min-w-0 flex-1 flex-col {{ $showChatOnMobile ? 'flex' : 'hidden sm:flex' }}">
+        <main class="flex min-w-0 flex-1 flex-col {{ $showChatOnMobile ? 'flex' : 'hidden sm:flex' }}">
         @if ($this->selectedConversationId && $this->selectedConversation)
 
-            {{-- Header --}}
-            <div class="flex items-center gap-3 border-b border-[#eee4d9] bg-[#fdfbf8] px-4 py-3 shadow-sm">
+                        <div class="flex items-center gap-3 border-b border-[#eee4d9] bg-[#fdfbf8] px-4 py-3 shadow-sm">
                 <button
                     type="button"
                     wire:click="backToList"
@@ -530,8 +525,7 @@ new class extends Component
                 </div>
             </div>
 
-            {{-- Messages --}}
-            <div
+                        <div
                 id="messages-container"
                 class="flex-1 space-y-3 overflow-y-auto px-4 py-6 bg-[#f4eee7]/40"
                 x-data="{
@@ -555,8 +549,7 @@ new class extends Component
                     <div wire:key="message-{{ $message->id }}" class="flex {{ $isMine ? 'justify-end' : 'justify-start' }}">
                         <div class="max-w-[85%] sm:max-w-md">
 
-                            {{-- حباب پیام --}}
-                            <div
+                                                        <div
                                 class="rounded-2xl px-4 py-2.5 text-sm shadow-sm
                                 {{ $isMine
                                     ? 'bg-[#0b1826] text-[#f8ecc2] rounded-bl-sm'
@@ -593,8 +586,7 @@ new class extends Component
                                     @endif
                                 @endif
 
-                                {{-- Attachment --}}
-                                @if ($message->hasAttachment())
+                                                                @if ($message->hasAttachment())
                                     <div class="{{ $message->body ? 'mt-3 pt-3 border-t border-white/10' : '' }}">
 
                                         @if ($isImage)
@@ -635,8 +627,7 @@ new class extends Component
                                 @endif
                             </div>
 
-                            {{-- Footer --}}
-                            <div
+                                                        <div
                                 class="mt-1 flex items-center gap-2 px-1 text-[10px] text-slate-400
                                 {{ $isMine ? 'justify-end' : 'justify-start' }}"
                             >
@@ -690,11 +681,9 @@ new class extends Component
                 @endforelse
             </div>
 
-            {{-- Compose --}}
-            <form wire:submit="sendMessage" class="border-t border-[#eee4d9] bg-[#fdfbf8] p-3 sm:p-4">
+                        <form wire:submit="sendMessage" class="border-t border-[#eee4d9] bg-[#fdfbf8] p-3 sm:p-4">
 
-                {{-- Selected file --}}
-                @if ($attachment)
+                                @if ($attachment)
                     <div class="mb-3 flex items-center gap-3 rounded-xl border border-[#eee4d9] bg-[#faf5ec] px-3 py-2.5">
                         <div class="grid h-10 w-10 place-items-center rounded-xl bg-[#e2f6e7] text-[#16a34a]">
                             <x-icon name="check-circle" class="h-5 w-5" />
@@ -718,8 +707,7 @@ new class extends Component
                     </div>
                 @endif
 
-                {{-- Upload progress --}}
-                <div wire:loading wire:target="attachment" class="mb-2 flex items-center gap-1.5 text-xs text-slate-500">
+                                <div wire:loading wire:target="attachment" class="mb-2 flex items-center gap-1.5 text-xs text-slate-500">
                     <svg class="h-3.5 w-3.5 animate-spin text-[#b98a10]" viewBox="0 0 24 24" fill="none">
                         <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-opacity="0.25" stroke-width="3"/>
                         <path d="M22 12a10 10 0 0 1-10 10" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
@@ -729,8 +717,7 @@ new class extends Component
 
                 <div class="flex items-end gap-2">
 
-                    {{-- File picker --}}
-                    <label
+                                        <label
                         class="grid h-11 w-11 shrink-0 cursor-pointer place-items-center rounded-xl border border-[#eee4d9] bg-white text-[#b98a10] transition hover:border-[#d7a92b]/50 hover:bg-[#faf0d2]"
                         title="ارسال فایل"
                     >
@@ -743,8 +730,7 @@ new class extends Component
                         >
                     </label>
 
-                    {{-- Textarea --}}
-                    <div class="relative flex-1">
+                                        <div class="relative flex-1">
                         <textarea
                             wire:model="messageBody"
                             rows="1"
@@ -754,8 +740,7 @@ new class extends Component
                         ></textarea>
                     </div>
 
-                    {{-- Send button --}}
-                    <button
+                                        <button
                         type="submit"
                         class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#0b1826] text-[#e8c465] transition hover:bg-[#132840] disabled:cursor-not-allowed disabled:opacity-50"
                         x-bind:disabled="!$wire.messageBody.trim() && !$wire.attachment"
@@ -770,8 +755,7 @@ new class extends Component
 
         @else
 
-            {{-- Welcome --}}
-            <div class="flex flex-1 flex-col items-center justify-center p-8 text-center">
+                        <div class="flex flex-1 flex-col items-center justify-center p-8 text-center">
                 <span class="mb-4 grid h-20 w-20 place-items-center rounded-2xl bg-gradient-to-br from-[#f0d060] to-[#d7a92b] text-[#0b1826] shadow-md">
                     <x-icon name="chat" class="h-10 w-10" />
                 </span>

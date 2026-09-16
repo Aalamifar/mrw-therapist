@@ -47,8 +47,7 @@ new class extends Component
                 <a href="#" class="text-gray-400 hover:text-white transition">سوالات متداول</a>
                 <a href="#" class="text-gray-400 hover:text-white transition">تماس با ما</a>
 
-                {{-- محصولات (dropdown) --}}
-                <div x-data="{ open: false }" class="relative">
+                                <div x-data="{ open: false }" class="relative">
                     <button @click="open = !open" @click.outside="open = false"
                             class="flex items-center gap-1 text-gray-400 hover:text-white transition">
                         محصولات

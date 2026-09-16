@@ -145,8 +145,7 @@ new class extends Component
 
 <div class="space-y-6">
 
-    {{-- ═══════════ هدر با آمار ═══════════ --}}
-    @php
+        @php
         $allAssignments = $this->assignments();
         $total = $allAssignments->count();
         $submitted = $allAssignments->filter(fn($a) => $a->submissions->isNotEmpty())->count();
@@ -170,8 +169,7 @@ new class extends Component
         </div>
     </div>
 
-    {{-- ═══════════ لیست تکالیف ═══════════ --}}
-    <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
+        <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
 
         @forelse ($allAssignments as $assignment)
             @php
@@ -187,16 +185,13 @@ new class extends Component
             >
                 <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
 
-                    {{-- آواتار + اطلاعات --}}
-                    <div class="flex min-w-0 flex-1 items-start gap-3">
-                        {{-- آواتار رنگی بر اساس وضعیت --}}
-                        <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl {{ $status['class'] }}">
+                                        <div class="flex min-w-0 flex-1 items-start gap-3">
+                                                <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl {{ $status['class'] }}">
                             <x-icon name="{{ $status['icon'] }}" class="h-6 w-6" />
                         </span>
 
                         <div class="min-w-0 flex-1">
-                            {{-- عنوان + badge وضعیت --}}
-                            <div class="flex flex-wrap items-center gap-2">
+                                                        <div class="flex flex-wrap items-center gap-2">
                                 <h3 class="text-base font-extrabold">{{ $assignment->title }}</h3>
                                 <span class="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-bold {{ $status['class'] }}">
                                     <span class="h-1.5 w-1.5 rounded-full {{ $status['dot'] }}"></span>
@@ -204,13 +199,11 @@ new class extends Component
                                 </span>
                             </div>
 
-                            {{-- توضیحات --}}
-                            @if ($assignment->description)
+                                                        @if ($assignment->description)
                                 <p class="mt-1.5 text-sm leading-relaxed text-slate-600">{{ $assignment->description }}</p>
                             @endif
 
-                            {{-- مهلت + زمان باقی‌مانده --}}
-                            <div class="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
+                                                        <div class="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
                                 @if ($assignment->due_date)
                                     <span class="inline-flex items-center gap-1.5 text-slate-500">
                                         <x-icon name="clock" class="h-3.5 w-3.5 text-red-500" />
@@ -233,8 +226,7 @@ new class extends Component
                         </div>
                     </div>
 
-                    {{-- دکمه پاسخ / badge ارسال‌شده --}}
-                    <div class="shrink-0 sm:pt-1">
+                                        <div class="shrink-0 sm:pt-1">
                         @if ($mySubmission)
                             <span class="inline-flex items-center gap-1.5 rounded-xl bg-[#e2f6e7] px-4 py-2 text-sm font-extrabold text-[#16a34a]">
                                 <x-icon name="check-circle" class="h-4 w-4" />
@@ -253,11 +245,9 @@ new class extends Component
                     </div>
                 </div>
 
-                {{-- ═══════════ پاسخ قبلی (ارسال‌شده) ═══════════ --}}
-                @if ($mySubmission)
+                                @if ($mySubmission)
                     <div class="mt-4 overflow-hidden rounded-xl border border-[#eee4d9] bg-white">
-                        {{-- هدر پاسخ --}}
-                        <div class="flex items-center gap-2 border-b border-[#f0e7dc] bg-[#faf5ec] px-4 py-2.5">
+                                                <div class="flex items-center gap-2 border-b border-[#f0e7dc] bg-[#faf5ec] px-4 py-2.5">
                             <x-icon name="check-circle" class="h-4 w-4 text-[#16a34a]" />
                             <span class="text-xs font-bold text-slate-700">پاسخ شما</span>
                             <span class="text-[10px] text-slate-400" dir="ltr">
@@ -266,15 +256,13 @@ new class extends Component
                         </div>
 
                         <div class="space-y-3 p-4">
-                            {{-- متن پاسخ --}}
-                            @if ($mySubmission->answer_text)
+                                                        @if ($mySubmission->answer_text)
                                 <div class="whitespace-pre-wrap text-sm leading-relaxed text-slate-700">
                                     {{ $mySubmission->answer_text }}
                                 </div>
                             @endif
 
-                            {{-- فایل ضمیمه --}}
-                            @if ($mySubmission->answer_file)
+                                                        @if ($mySubmission->answer_file)
                                 <a
                                     href="{{ Storage::disk('local')->url($mySubmission->answer_file) }}"
                                     target="_blank"
@@ -291,8 +279,7 @@ new class extends Component
                                 </a>
                             @endif
 
-                            {{-- نمره --}}
-                            @if ($mySubmission->grade !== null)
+                                                        @if ($mySubmission->grade !== null)
                                 <div class="flex items-center gap-3 rounded-xl bg-gradient-to-l from-[#faf0d2]/60 to-[#faf0d2]/20 border border-[#e8c465]/30 px-4 py-3">
                                     <span class="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-[#f0d060] to-[#d7a92b] text-xl font-extrabold text-[#0b1826] shadow-md">
                                         {{ $this->fa($mySubmission->grade) }}
@@ -304,8 +291,7 @@ new class extends Component
                                 </div>
                             @endif
 
-                            {{-- بازخورد مربی --}}
-                            @if ($mySubmission->feedback)
+                                                        @if ($mySubmission->feedback)
                                 <div class="rounded-xl bg-[#e8eef7] px-4 py-3">
                                     <div class="mb-1 flex items-center gap-1.5 text-xs font-bold text-[#33507a]">
                                         <x-icon name="chat" class="h-3.5 w-3.5" />
@@ -318,8 +304,7 @@ new class extends Component
                     </div>
                 @endif
 
-                {{-- ═══════════ فرم پاسخ ═══════════ --}}
-                @if ($isAnswering)
+                                @if ($isAnswering)
                     <form
                         wire:submit="submit({{ $assignment->id }})"
                         class="mt-4 space-y-4 rounded-xl border border-[#d7a92b]/30 bg-[#faf5ec] p-5 shadow-sm"
@@ -331,8 +316,7 @@ new class extends Component
                             <h4 class="text-sm font-extrabold">پاسخ به تکلیف</h4>
                         </div>
 
-                        {{-- متن پاسخ --}}
-                        <div>
+                                                <div>
                             <label class="mb-1.5 block text-xs font-bold text-slate-600">متن پاسخ (اختیاری)</label>
                             <textarea
                                 wire:model="answerText"
@@ -343,8 +327,7 @@ new class extends Component
                             @error('answerText') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                         </div>
 
-                        {{-- فایل پاسخ --}}
-                        <div>
+                                                <div>
                             <label class="mb-1.5 block text-xs font-bold text-slate-600">
                                 فایل پاسخ (اختیاری)
                                 <span class="mr-1 text-[10px] font-normal text-slate-400">حداکثر ۱۰ مگابایت</span>
@@ -390,8 +373,7 @@ new class extends Component
                             @error('answerFile') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                         </div>
 
-                        {{-- دکمه‌ها --}}
-                        <div class="flex gap-2 pt-1">
+                                                <div class="flex gap-2 pt-1">
                             <button
                                 type="submit"
                                 wire:loading.attr="disabled"
@@ -422,8 +404,7 @@ new class extends Component
                 @endif
             </div>
         @empty
-            {{-- حالت خالی --}}
-            <div class="flex flex-col items-center gap-4 px-5 py-16 text-center">
+                        <div class="flex flex-col items-center gap-4 px-5 py-16 text-center">
                 <span class="grid h-16 w-16 place-items-center rounded-2xl bg-[#dff4f0] text-[#0d9488]">
                     <x-icon name="clipboard-list" class="h-8 w-8" />
                 </span>

@@ -50,8 +50,7 @@ new class extends Component
 
 <div class="space-y-8">
 
-    {{-- ═══════════ خوش‌آمدگویی ═══════════ --}}
-    <section class="space-y-3">
+        <section class="space-y-3">
         <h1 class="flex flex-wrap items-center justify-start gap-3 text-xl font-extrabold lg:justify-center lg:text-3xl">
             <span>سلام {{ auth()->user()->name }}، امروز هم یک قدم دیگر جلو میریم</span>
             <x-icon name="sparkles" class="h-7 w-7 shrink-0 text-[#d7a92b] lg:h-9 lg:w-9" />
@@ -68,14 +67,11 @@ new class extends Component
 
     <div class="grid items-start gap-6 xl:grid-cols-3">
 
-        {{-- ═══════════ ستون اصلی: آمار + دسترسی سریع ═══════════ --}}
-        <section class="space-y-5 xl:col-span-2">
+                <section class="space-y-5 xl:col-span-2">
 
-            {{-- آمار (ظریف و مینیمال، هم‌خانواده با کارت‌های طرح) --}}
-            <div class="grid gap-5 sm:grid-cols-3">
+                        <div class="grid gap-5 sm:grid-cols-3">
 
-                {{-- کلاس‌های فعال --}}
-                <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-5 shadow-sm">
+                                <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-5 shadow-sm">
                     <span class="grid h-12 w-12 place-items-center rounded-2xl bg-[#faf0d2] text-[#b98a10]">
                         <x-icon name="academic-cap" class="h-6 w-6" />
                     </span>
@@ -83,8 +79,7 @@ new class extends Component
                     <div class="mt-1 text-xs text-slate-500">کلاس فعال</div>
                 </div>
 
-                {{-- دانش‌آموزان --}}
-                <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-5 shadow-sm">
+                                <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-5 shadow-sm">
                     <span class="grid h-12 w-12 place-items-center rounded-2xl bg-[#dff4f0] text-[#0d9488]">
                         <x-icon name="users" class="h-6 w-6" />
                     </span>
@@ -92,8 +87,7 @@ new class extends Component
                     <div class="mt-1 text-xs text-slate-500">دانش‌آموز</div>
                 </div>
 
-                {{-- پیام‌های جدید --}}
-                <div class="relative overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-5 shadow-sm">
+                                <div class="relative overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-5 shadow-sm">
                     @if($unreadMessages > 0)
                         <span class="absolute left-0 top-0 h-full w-1 bg-[#d7a92b]"></span>
                     @endif
@@ -105,11 +99,9 @@ new class extends Component
                 </div>
             </div>
 
-            {{-- دسترسی سریع (هم‌سبک کارت‌های داشبورد دانش‌آموز) --}}
-            <div class="grid gap-5 sm:grid-cols-2">
+                        <div class="grid gap-5 sm:grid-cols-2">
 
-                {{-- مدیریت کلاس‌ها --}}
-                <a href="{{ route('therapist.classes') }}" class="group flex flex-col gap-4 rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+                                <a href="{{ route('therapist.classes') }}" class="group flex flex-col gap-4 rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
                     <span class="grid h-14 w-14 place-items-center rounded-2xl bg-[#0b1826] text-[#e8c465] transition group-hover:scale-105">
                         <x-icon name="book" class="h-7 w-7" />
                     </span>
@@ -119,8 +111,7 @@ new class extends Component
                     </span>
                 </a>
 
-                {{-- پیام‌رسان --}}
-                <a href="{{ route('therapist.messenger') }}" class="group relative flex flex-col gap-4 rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+                                <a href="{{ route('therapist.messenger') }}" class="group relative flex flex-col gap-4 rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
                     @if($unreadMessages > 0)
                         <span class="absolute left-4 top-4 flex h-2.5 w-2.5">
                             <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#d7a92b] opacity-75"></span>
@@ -144,8 +135,7 @@ new class extends Component
             </div>
         </section>
 
-        {{-- ═══════════ پنل کلاس‌های اخیر (هم‌سبک «برنامه امروز») ═══════════ --}}
-        <aside class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
+                <aside class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
             <header class="flex items-center justify-between border-b border-[#f0e7dc] px-5 py-4">
                 <h2 class="font-bold">کلاس‌های اخیر شما</h2>
                 <a href="{{ route('therapist.classes') }}" class="flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700">

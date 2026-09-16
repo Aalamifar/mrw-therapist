@@ -93,8 +93,7 @@ new class extends Component
 
 <div class="space-y-6">
 
-    {{-- ═══════════ بازگشت ═══════════ --}}
-    <a
+        <a
         href="{{ route('student.dashboard') }}"
         class="inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-sm text-slate-500 transition hover:bg-[#faf5ec] hover:text-slate-700"
     >
@@ -104,16 +103,13 @@ new class extends Component
 
     @php $class = $this->class(); @endphp
 
-    {{-- ═══════════ هدر کلاس ═══════════ --}}
-    <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-6 shadow-sm sm:p-8">
+        <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-6 shadow-sm sm:p-8">
         <div class="flex items-start gap-4">
-            {{-- آواتار کلاس --}}
-            <span class="grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-[#faf0d2] text-[#b98a10]">
+                        <span class="grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-[#faf0d2] text-[#b98a10]">
                 <x-icon name="academic-cap" class="h-8 w-8" />
             </span>
 
-            {{-- اطلاعات --}}
-            <div class="min-w-0 flex-1">
+                        <div class="min-w-0 flex-1">
                 <h1 class="text-2xl font-extrabold">{{ $class->name }}</h1>
 
                 <div class="mt-2 flex flex-wrap items-center gap-2">
@@ -139,8 +135,7 @@ new class extends Component
                     @endif
                 </div>
 
-                {{-- آمار سریع --}}
-                <div class="mt-4 flex flex-wrap gap-2 text-xs">
+                                <div class="mt-4 flex flex-wrap gap-2 text-xs">
                     <span class="flex items-center gap-1.5 rounded-lg bg-[#fdeaea] px-2.5 py-1.5 font-bold text-[#dc2626]">
                         <x-icon name="video" class="h-3.5 w-3.5" />
                         {{ $this->fa($class->lessons()->where('type', 'video')->count()) }} فیلم
@@ -166,8 +161,7 @@ new class extends Component
         </div>
     </div>
 
-    {{-- ═══════════ تب‌ها ═══════════ --}}
-    <div class="overflow-x-auto rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-2 shadow-sm">
+        <div class="overflow-x-auto rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-2 shadow-sm">
         <div class="flex gap-2">
             @foreach ($this->tabStats() as $tabKey => $tab)
                 <button
@@ -186,8 +180,7 @@ new class extends Component
         </div>
     </div>
 
-    {{-- ═══════════ محتوای تب ═══════════ --}}
-    <div>
+        <div>
         @if ($activeTab === 'videos')
             <livewire:student.lessons-view :classId="$classId" type="video" :key="'videos-'.$classId" />
         @elseif ($activeTab === 'books')

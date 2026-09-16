@@ -114,8 +114,7 @@ new class extends Component
 
 <div class="space-y-6">
 
-    {{-- ═══════════ هدر + دکمه کاربر جدید ═══════════ --}}
-    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
             <h1 class="text-2xl font-extrabold">مدیریت کاربران</h1>
             <p class="mt-1 text-sm text-slate-500">مشاهده، ویرایش و مدیریت دسترسی کاربران سیستم</p>
@@ -129,8 +128,7 @@ new class extends Component
         </a>
     </div>
 
-    {{-- ═══════════ جستجو ═══════════ --}}
-    <div class="relative w-full sm:max-w-sm">
+        <div class="relative w-full sm:max-w-sm">
         <x-icon name="search" class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#b98a10]" />
         <input
             type="text"
@@ -140,16 +138,14 @@ new class extends Component
         >
     </div>
 
-    {{-- ═══════════ پیام موفقیت ═══════════ --}}
-    @if ($successMessage)
+        @if ($successMessage)
         <div class="flex items-center gap-2 rounded-xl border border-[#c9ecd2] bg-[#e2f6e7] px-3 py-2.5 text-sm font-medium text-[#16a34a]">
             <x-icon name="check-circle" class="h-4 w-4 shrink-0" />
             {{ $successMessage }}
         </div>
     @endif
 
-    {{-- ═══════════ لیست کاربران ═══════════ --}}
-    <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
+        <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
         @forelse ($this->users() as $user)
             @php $info = $this->roleInfo($user->role); @endphp
 
@@ -157,8 +153,7 @@ new class extends Component
 
                 <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 
-                    {{-- اطلاعات کاربر --}}
-                    <div class="flex min-w-0 items-center gap-3">
+                                        <div class="flex min-w-0 items-center gap-3">
                         <div class="grid h-11 w-11 shrink-0 place-items-center rounded-full text-sm font-extrabold {{ $info['avatar'] }}">
                             {{ $this->initials($user->name) }}
                         </div>
@@ -168,8 +163,7 @@ new class extends Component
                         </div>
                     </div>
 
-                    {{-- نقش + عملیات --}}
-                    <div class="flex items-center justify-between gap-4 sm:justify-end">
+                                        <div class="flex items-center justify-between gap-4 sm:justify-end">
                         <span class="rounded-md px-2.5 py-1 text-xs font-bold {{ $info['badge'] }}">
                             {{ $info['label'] }}
                         </span>
@@ -201,8 +195,7 @@ new class extends Component
                     </div>
                 </div>
 
-                {{-- ═══ فرم ویرایش اطلاعات ═══ --}}
-                @if ($editingUserId === $user->id)
+                                @if ($editingUserId === $user->id)
                     <div class="mt-4 rounded-xl border border-[#eee4d9] bg-[#faf5ec] p-4">
                         <form wire:submit="updateUser" class="grid grid-cols-1 gap-3 sm:grid-cols-4 sm:items-end">
                             <div>
@@ -258,8 +251,7 @@ new class extends Component
                     </div>
                 @endif
 
-                {{-- ═══ فرم تغییر رمز ═══ --}}
-                @if ($passwordEditingUserId === $user->id)
+                                @if ($passwordEditingUserId === $user->id)
                     <div class="mt-4 rounded-xl border border-[#eee4d9] bg-[#faf5ec] p-4">
                         <form wire:submit="updatePassword" class="flex flex-col gap-3 sm:flex-row sm:items-end">
                             <div class="flex-1">

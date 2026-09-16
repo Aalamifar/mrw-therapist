@@ -1,11 +1,9 @@
 <x-layouts.guest>
     <div class="mx-auto max-w-lg px-4 py-12 sm:py-16">
 
-        {{-- ═══════════ کارت تأییدیه ═══════════ --}}
-        <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
+                <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
 
-            {{-- هدر موفقیت --}}
-            <div class="flex flex-col items-center gap-4 border-b border-[#f0e7dc] bg-gradient-to-b from-[#e2f6e7]/40 to-transparent px-6 py-10 text-center">
+                        <div class="flex flex-col items-center gap-4 border-b border-[#f0e7dc] bg-gradient-to-b from-[#e2f6e7]/40 to-transparent px-6 py-10 text-center">
                 <span class="grid h-20 w-20 place-items-center rounded-full bg-gradient-to-br from-[#4ade80] to-[#16a34a] text-white shadow-lg ring-8 ring-[#e2f6e7]/60">
                     <x-icon name="check" class="h-10 w-10" />
                 </span>
@@ -19,8 +17,7 @@
                 </div>
             </div>
 
-            {{-- کد پیگیری --}}
-            <div
+                        <div
                 x-data="{
                     copied: false,
                     async copy() {
@@ -65,13 +62,11 @@
                 </div>
             </div>
 
-            {{-- مراحل بعدی --}}
-            <div class="border-t border-[#f0e7dc] bg-[#faf5ec]/40 px-6 py-5">
+                        <div class="border-t border-[#f0e7dc] bg-[#faf5ec]/40 px-6 py-5">
                 <p class="mb-4 text-xs font-bold text-slate-500">مراحل بعدی:</p>
 
                 <div class="space-y-3">
-                    {{-- مرحله ۱: انجام شده --}}
-                    <div class="flex items-center gap-3">
+                                        <div class="flex items-center gap-3">
                         <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#e2f6e7] text-[#16a34a]">
                             <x-icon name="check" class="h-4 w-4" />
                         </span>
@@ -81,11 +76,9 @@
                         </div>
                     </div>
 
-                    {{-- خط اتصال --}}
-                    <div class="mr-4 h-4 w-px bg-[#e0d4bf]"></div>
+                                        <div class="mr-4 h-4 w-px bg-[#e0d4bf]"></div>
 
-                    {{-- مرحله ۲: در انتظار --}}
-                    <div class="flex items-center gap-3">
+                                        <div class="flex items-center gap-3">
                         <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#faf0d2] text-[#b98a10]">
                             <x-icon name="clock" class="h-4 w-4" />
                         </span>
@@ -98,11 +91,9 @@
                         </span>
                     </div>
 
-                    {{-- خط اتصال --}}
-                    <div class="mr-4 h-4 w-px bg-[#e0d4bf]"></div>
+                                        <div class="mr-4 h-4 w-px bg-[#e0d4bf]"></div>
 
-                    {{-- مرحله ۳: آینده --}}
-                    <div class="flex items-center gap-3">
+                                        <div class="flex items-center gap-3">
                         <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#f0e7dc] text-slate-400">
                             <x-icon name="academic-cap" class="h-4 w-4" />
                         </span>
@@ -114,8 +105,7 @@
                 </div>
             </div>
 
-            {{-- CTA --}}
-            <div class="border-t border-[#f0e7dc] p-6">
+                        <div class="border-t border-[#f0e7dc] p-6">
                 <a
                     href="{{ route('course.access.form') }}"
                     class="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-[#f0d060] to-[#d7a92b] py-3.5 text-sm font-extrabold text-[#0b1826] shadow-md transition hover:-translate-y-0.5 hover:shadow-lg"

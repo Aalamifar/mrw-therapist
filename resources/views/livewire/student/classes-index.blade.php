@@ -36,8 +36,7 @@ new class extends Component
 
 <div class="space-y-6">
 
-    {{-- ═══════════ هدر ═══════════ --}}
-    <div class="flex items-center gap-3">
+        <div class="flex items-center gap-3">
         <span class="grid h-12 w-12 place-items-center rounded-2xl bg-[#faf0d2] text-[#b98a10]">
             <x-icon name="academic-cap" class="h-6 w-6" />
         </span>
@@ -49,31 +48,27 @@ new class extends Component
         </div>
     </div>
 
-    {{-- ═══════════ کارت‌های کلاس ═══════════ --}}
-    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
         @forelse ($this->classes() as $class)
             <a
                 href="{{ route('student.classes.show', $class->id) }}"
                 class="group flex flex-col gap-4 rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-[#d7a92b]/40 hover:shadow-md"
             >
-                {{-- آواتار + فلش ورود --}}
-                <div class="flex items-start justify-between">
+                                <div class="flex items-start justify-between">
                     <span class="grid h-12 w-12 place-items-center rounded-2xl bg-[#faf0d2] text-[#b98a10] transition group-hover:scale-105">
                         <x-icon name="academic-cap" class="h-6 w-6" />
                     </span>
                     <x-icon name="arrow-left" class="h-4 w-4 text-slate-300 transition group-hover:text-[#b98a10]" />
                 </div>
 
-                {{-- عنوان + موضوع --}}
-                <div>
+                                <div>
                     <h3 class="font-extrabold transition group-hover:text-[#b98a10]">{{ $class->name }}</h3>
                     <span class="mt-2 inline-block rounded-md bg-[#faf0d2] px-2 py-0.5 text-xs font-bold text-[#b98a10]">
                         {{ $class->subject }}
                     </span>
                 </div>
 
-                {{-- آمار محتوا --}}
-                <div class="flex flex-wrap gap-1.5 text-[10px]">
+                                <div class="flex flex-wrap gap-1.5 text-[10px]">
                     <span class="flex items-center gap-1 rounded-md bg-[#fdeaea] px-2 py-1 font-bold text-[#dc2626]">
                         <x-icon name="video" class="h-3 w-3" />
                         {{ $this->fa($class->lessons_count) }} درس
@@ -88,8 +83,7 @@ new class extends Component
                     </span>
                 </div>
 
-                {{-- مربی --}}
-                @if ($class->therapist)
+                                @if ($class->therapist)
                     <div class="mt-auto flex items-center gap-2 border-t border-[#f0e7dc] pt-3">
                         <span class="grid h-7 w-7 place-items-center rounded-full text-xs font-extrabold {{ $this->avatarTone($class->therapist->id) }}">
                             {{ mb_substr($class->therapist->name, 0, 1) }}
@@ -101,8 +95,7 @@ new class extends Component
                 @endif
             </a>
         @empty
-            {{-- حالت خالی --}}
-            <div class="col-span-full flex flex-col items-center gap-4 rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] px-5 py-16 text-center shadow-sm">
+                        <div class="col-span-full flex flex-col items-center gap-4 rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] px-5 py-16 text-center shadow-sm">
                 <span class="grid h-16 w-16 place-items-center rounded-2xl bg-[#faf0d2] text-[#b98a10]">
                     <x-icon name="academic-cap" class="h-8 w-8" />
                 </span>

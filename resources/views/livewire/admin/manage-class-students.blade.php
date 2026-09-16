@@ -16,7 +16,7 @@ new class extends Component
     {
         $this->classId = $classId;
         $class = SchoolClass::findOrFail($classId);
-        $this->selectedStudents = $class->students->pluck('id')->toArray();
+        $this->selectedStudents = $class->students->pluck('id')->map(fn ($id) => (int) $id)->toArray();
     }
 
     public function class()
@@ -38,10 +38,22 @@ new class extends Component
             ->get();
     }
 
-    /** تعداد کل دانش‌آموزان (بدون فیلتر) برای نمایش «از X نفر» */
     public function totalStudents(): int
     {
         return User::where('role', 'student')->count();
+    }
+
+    /** ✅ جدید: toggle انتخاب کاملاً سروری — هر کلیک = re-render فوری */
+    public function toggleStudent($id)
+    {
+        $id = (int) $id;
+        $current = array_values(array_unique(array_map('intval', $this->selectedStudents)));
+
+        $this->selectedStudents = in_array($id, $current, true)
+            ? array_values(array_diff($current, [$id]))
+            : [...$current, $id];
+
+        $this->successMessage = '';
     }
 
     public function saveStudents()
@@ -54,15 +66,17 @@ new class extends Component
 
     public function selectAll()
     {
-        $this->selectedStudents = User::where('role', 'student')->pluck('id')->toArray();
+        $this->selectedStudents = User::where('role', 'student')
+            ->pluck('id')->map(fn ($id) => (int) $id)->toArray();
+        $this->successMessage = '';
     }
 
     public function deselectAll()
     {
         $this->selectedStudents = [];
+        $this->successMessage = '';
     }
 
-    /** رنگ آواتار هر دانش‌آموز — ثابت و هماهنگ با پالت طرح */
     public function avatarTone($id): string
     {
         $tones = [
@@ -86,12 +100,16 @@ new class extends Component
     {
         $this->successMessage = '';
     }
+
+    public function fa(int $number): string
+    {
+        return str_replace(range('0', '9'), ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'], (string) $number);
+    }
 }; ?>
 
 <div class="mx-auto max-w-lg space-y-5">
 
-    {{-- ═══════════ بازگشت ═══════════ --}}
-    <a
+        <a
         href="{{ route('admin.dashboard') }}"
         class="inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-sm text-slate-500 transition hover:bg-[#faf5ec] hover:text-slate-700"
     >
@@ -99,13 +117,11 @@ new class extends Component
         بازگشت
     </a>
 
-    {{-- ═══════════ کارت اصلی ═══════════ --}}
     @php $class = $this->class(); @endphp
 
     <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-6 shadow-sm sm:p-8">
 
-        {{-- هدر --}}
-        <div class="flex items-start gap-4">
+                <div class="flex items-start gap-4">
             <span class="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-[#faf0d2] text-[#b98a10]">
                 <x-icon name="academic-cap" class="h-7 w-7" />
             </span>
@@ -118,16 +134,14 @@ new class extends Component
             </div>
         </div>
 
-        {{-- پیام موفقیت --}}
-        @if ($successMessage)
+                @if ($successMessage)
             <div class="mt-6 flex items-center gap-2 rounded-xl bg-[#e2f6e7] px-3 py-2.5 text-sm font-medium text-[#16a34a]">
                 <x-icon name="check-circle" class="h-4 w-4 shrink-0" />
                 {{ $successMessage }}
             </div>
         @endif
 
-        {{-- ═══════════ جستجو ═══════════ --}}
-        <div class="relative mt-6">
+                <div class="relative mt-6">
             <x-icon name="search" class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#b98a10]" />
             <input
                 type="text"
@@ -152,19 +166,17 @@ new class extends Component
             </div>
         </div>
 
-        {{-- ═══════════ آمار + فیلتر ═══════════ --}}
-        <div class="mt-4 flex items-center justify-between gap-2">
+                <div class="mt-4 flex items-center justify-between gap-2">
             <div class="flex items-center gap-2">
                 <div class="flex items-center gap-1.5 rounded-lg bg-[#faf0d2] px-2.5 py-1.5 text-[#b98a10]">
                     <x-icon name="users" class="h-3.5 w-3.5" />
-                    <span class="text-xs font-extrabold">{{ count($selectedStudents) }}</span>
+                    <span class="text-xs font-extrabold">{{ $this->fa(count($selectedStudents)) }}</span>
                     <span class="text-xs font-medium">انتخاب شده</span>
                 </div>
-                <span class="text-xs text-slate-400">از {{ $this->totalStudents() }} نفر</span>
+                <span class="text-xs text-slate-400">از {{ $this->fa($this->totalStudents()) }} نفر</span>
             </div>
 
-            {{-- سوییچ «فقط انتخاب‌شده‌ها» --}}
-            <label class="flex cursor-pointer items-center gap-2">
+                        <label class="flex cursor-pointer items-center gap-2">
                 <input type="checkbox" wire:model.live="showSelectedOnly" class="sr-only">
                 <span class="relative h-5 w-9 shrink-0 rounded-full transition {{ $showSelectedOnly ? 'bg-[#d7a92b]' : 'bg-[#e0d4bf]' }}">
                     <span class="absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition-all {{ $showSelectedOnly ? 'right-[18px]' : 'right-0.5' }}"></span>
@@ -173,8 +185,7 @@ new class extends Component
             </label>
         </div>
 
-        {{-- ═══════════ انتخاب / لغو انتخاب ═══════════ --}}
-        <div class="mt-4 flex gap-2">
+                <div class="mt-4 flex gap-2">
             <button
                 type="button"
                 wire:click="selectAll"
@@ -193,45 +204,41 @@ new class extends Component
             </button>
         </div>
 
-        {{-- ═══════════ لیست دانش‌آموزان ═══════════ --}}
-        <div class="mt-4 max-h-96 space-y-2 overflow-y-auto rounded-xl border border-[#eee4d9] bg-[#faf5ec] p-2">
+                        <div
+            class="mt-4 max-h-96 space-y-2 overflow-y-auto rounded-xl border border-[#eee4d9] bg-[#faf5ec] p-2 transition"
+            wire:loading.class="opacity-50 pointer-events-none"
+            wire:target="toggleStudent, selectAll, deselectAll"
+        >
             @forelse ($this->allStudents() as $student)
-                @php $isSelected = in_array($student->id, $selectedStudents); @endphp
+                @php
+                    $isSelected = in_array((int) $student->id, array_map('intval', $selectedStudents), true);
+                @endphp
 
-                <label
+                                <button
+                    type="button"
                     wire:key="student-{{ $student->id }}"
-                    class="flex cursor-pointer items-center gap-3 rounded-xl border px-3 py-2.5 transition {{ $isSelected ? 'border-[#d7a92b]/60 bg-[#faf0d2]/70 shadow-sm' : 'border-transparent bg-white hover:border-[#eee4d9] hover:shadow-sm' }}"
+                    wire:click="toggleStudent({{ $student->id }})"
+                    class="flex w-full items-center gap-3 rounded-xl border px-3 py-2.5 text-right transition {{ $isSelected ? 'border-[#d7a92b]/60 bg-[#faf0d2]/70 shadow-sm' : 'border-transparent bg-white hover:border-[#eee4d9] hover:shadow-sm' }}"
                 >
-                    <input
-                        type="checkbox"
-                        wire:model="selectedStudents"
-                        value="{{ $student->id }}"
-                        class="sr-only"
-                    >
-
-                    {{-- چک‌باکس سفارشی --}}
-                    <span class="grid h-5 w-5 shrink-0 place-items-center rounded-md border-2 transition {{ $isSelected ? 'border-[#d7a92b] bg-[#d7a92b]' : 'border-[#d8cbb4] bg-white' }}">
+                                        <span class="grid h-5 w-5 shrink-0 place-items-center rounded-md border-2 transition {{ $isSelected ? 'border-[#d7a92b] bg-[#d7a92b]' : 'border-[#d8cbb4] bg-white' }}">
                         <x-icon name="check" class="h-3 w-3 text-white transition {{ $isSelected ? 'opacity-100' : 'opacity-0' }}" />
                     </span>
 
-                    {{-- آواتار --}}
-                    <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full text-sm font-extrabold {{ $this->avatarTone($student->id) }}">
+                                        <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full text-sm font-extrabold {{ $this->avatarTone($student->id) }}">
                         {{ mb_substr($student->name, 0, 1) }}
                     </span>
 
-                    {{-- اطلاعات --}}
-                    <span class="min-w-0 flex-1">
+                                        <span class="min-w-0 flex-1 text-right">
                         <span class="block truncate text-sm font-bold">{{ $student->name }}</span>
                         <span class="block truncate text-xs text-slate-400" dir="ltr">{{ $student->phone }}</span>
                     </span>
 
-                    {{-- نشان انتخاب --}}
-                    @if ($isSelected)
+                                        @if ($isSelected)
                         <span class="shrink-0 rounded-full bg-[#d7a92b]/20 px-2 py-0.5 text-xs font-bold text-[#b98a10]">
                             انتخاب شده
                         </span>
                     @endif
-                </label>
+                </button>
             @empty
                 <div class="flex flex-col items-center justify-center py-12 text-center">
                     <span class="mb-3 grid h-16 w-16 place-items-center rounded-2xl bg-[#faf0d2] text-[#b98a10]">
@@ -259,8 +266,7 @@ new class extends Component
             @endforelse
         </div>
 
-        {{-- ═══════════ ذخیره ═══════════ --}}
-        <button
+                <button
             wire:click="saveStudents"
             wire:loading.attr="disabled"
             wire:target="saveStudents"

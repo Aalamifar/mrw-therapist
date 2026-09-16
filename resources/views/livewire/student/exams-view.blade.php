@@ -207,8 +207,7 @@ new class extends Component
 
 <div class="space-y-6">
 
-    {{-- ═══════════ هدر ═══════════ --}}
-    <div class="flex items-center gap-3">
+        <div class="flex items-center gap-3">
         <span class="grid h-12 w-12 place-items-center rounded-2xl bg-[#fdeaea] text-[#dc2626]">
             <x-icon name="exam" class="h-6 w-6" />
         </span>
@@ -221,8 +220,7 @@ new class extends Component
     </div>
 
     @if ($this->takingExamId)
-        {{-- ═══════════ حالت در حال آزمون ═══════════ --}}
-        @php $exam = $this->currentExam(); @endphp
+                @php $exam = $this->currentExam(); @endphp
 
         <div
             x-data="{
@@ -255,8 +253,7 @@ new class extends Component
             class="space-y-5"
         >
 
-            {{-- نوار بالا: عنوان + تایمر + progress --}}
-            <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-5 shadow-sm">
+                        <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-5 shadow-sm">
                 <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <div class="flex items-center gap-3">
                         <span class="grid h-12 w-12 place-items-center rounded-2xl bg-[#fdeaea] text-[#dc2626]">
@@ -270,8 +267,7 @@ new class extends Component
                         </div>
                     </div>
 
-                    {{-- تایمر --}}
-                    <div
+                                        <div
                         class="flex items-center gap-2 rounded-xl bg-gradient-to-br from-[#f0d060] to-[#d7a92b] px-4 py-2.5 shadow-md"
                         :class="remaining < 60 ? 'animate-pulse from-red-500 to-red-600 text-white' : 'text-[#0b1826]'"
                     >
@@ -284,8 +280,7 @@ new class extends Component
                     </div>
                 </div>
 
-                {{-- Progress bar --}}
-                <div class="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-[#eee4d9]">
+                                <div class="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-[#eee4d9]">
                     <div
                         class="h-full rounded-full bg-gradient-to-br from-[#f0d060] to-[#d7a92b] transition-all duration-500"
                         :style="`width: ${(answered / total) * 100}%`"
@@ -293,8 +288,7 @@ new class extends Component
                 </div>
             </div>
 
-            {{-- سؤالات --}}
-            <form wire:submit="submitExam" class="space-y-4">
+                        <form wire:submit="submitExam" class="space-y-4">
                 @foreach ($exam->questions as $i => $q)
                     @php
                         $isAnswered = isset($this->answers[$q->id]) && $this->answers[$q->id] !== null;
@@ -302,8 +296,7 @@ new class extends Component
                     @endphp
 
                     <div class="rounded-2xl border {{ $isAnswered ? 'border-[#d7a92b]/40 bg-[#faf0d2]/30' : 'border-[#eee4d9] bg-[#fdfbf8]' }} p-5 shadow-sm transition sm:p-6">
-                        {{-- هدر سؤال --}}
-                        <div class="flex items-start gap-3">
+                                                <div class="flex items-start gap-3">
                             <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#faf0d2] text-sm font-extrabold text-[#b98a10]">
                                 {{ $this->fa($i + 1) }}
                             </span>
@@ -322,8 +315,7 @@ new class extends Component
                             </div>
                         </div>
 
-                        {{-- فایل ضمیمه سؤال --}}
-                        @if ($q->file_path && $ext)
+                                                @if ($q->file_path && $ext)
                             <div class="mt-4 overflow-hidden rounded-xl border border-[#eee4d9] bg-white" oncontextmenu="return false;">
                                 @if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp']))
                                     <img
@@ -341,8 +333,7 @@ new class extends Component
                             </div>
                         @endif
 
-                        {{-- گزینه‌ها یا پاسخ تشریحی --}}
-                        <div class="mt-4">
+                                                <div class="mt-4">
                             @if ($q->type === 'multiple_choice')
                                 <div class="space-y-2">
                                     @foreach ($q->options as $optIndex => $opt)
@@ -354,25 +345,21 @@ new class extends Component
                                                 class="peer sr-only"
                                             >
                                             <span class="flex items-center gap-3 rounded-xl border border-[#eee4d9] bg-white px-4 py-3 text-sm transition hover:border-[#d7a92b]/40 hover:bg-[#faf5ec] peer-checked:border-[#d7a92b] peer-checked:bg-[#faf0d2] peer-checked:ring-2 peer-checked:ring-[#d7a92b]/20">
-                                                {{-- Radio indicator --}}
-                                                <span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 transition {{ (isset($this->answers[$q->id]) && $this->answers[$q->id] === $opt) ? 'border-[#d7a92b] bg-[#d7a92b]' : 'border-[#d8cbb4] bg-white' }}">
+                                                                                                <span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 transition {{ (isset($this->answers[$q->id]) && $this->answers[$q->id] === $opt) ? 'border-[#d7a92b] bg-[#d7a92b]' : 'border-[#d8cbb4] bg-white' }}">
                                                     <span class="h-2 w-2 rounded-full bg-white {{ (isset($this->answers[$q->id]) && $this->answers[$q->id] === $opt) ? '' : 'hidden' }}"></span>
                                                 </span>
 
-                                                {{-- حرف گزینه --}}
-                                                <span class="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-[#faf0d2] text-xs font-extrabold text-[#b98a10]">
+                                                                                                <span class="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-[#faf0d2] text-xs font-extrabold text-[#b98a10]">
                                                     {{ ['الف', 'ب', 'ج', 'د', 'ه', 'و'][$optIndex] ?? '?' }}
                                                 </span>
 
-                                                {{-- متن گزینه --}}
-                                                <span class="flex-1 font-bold text-slate-700">{{ $opt }}</span>
+                                                                                                <span class="flex-1 font-bold text-slate-700">{{ $opt }}</span>
                                             </span>
                                         </label>
                                     @endforeach
                                 </div>
                             @else
-                                {{-- تشریحی: textarea + آپلود --}}
-                                <div class="space-y-3">
+                                                                <div class="space-y-3">
                                     <textarea
                                         wire:model="answers.{{ $q->id }}"
                                         rows="4"
@@ -430,8 +417,7 @@ new class extends Component
                     </div>
                 @endforeach
 
-                {{-- دکمه ارسال --}}
-                <button
+                                <button
                     type="submit"
                     wire:loading.attr="disabled"
                     wire:target="submitExam"
@@ -454,8 +440,7 @@ new class extends Component
         </div>
 
     @else
-        {{-- ═══════════ لیست آزمون‌ها ═══════════ --}}
-        <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
+                <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
             @forelse ($this->exams() as $exam)
                 @php
                     $status = $this->examStatus($exam);
@@ -465,8 +450,7 @@ new class extends Component
                     wire:key="exam-{{ $exam->id }}"
                     class="flex flex-col gap-4 border-b border-[#f0e7dc] px-5 py-4 transition last:border-b-0 hover:bg-[#faf5ec] sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-6"
                 >
-                    {{-- اطلاعات آزمون --}}
-                    <div class="flex min-w-0 flex-1 items-start gap-3">
+                                        <div class="flex min-w-0 flex-1 items-start gap-3">
                         <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl {{ $status['class'] }}">
                             <x-icon name="{{ $status['icon'] }}" class="h-5 w-5" />
                         </span>
@@ -501,11 +485,9 @@ new class extends Component
                         </div>
                     </div>
 
-                    {{-- CTA / نمره --}}
-                    <div class="shrink-0">
+                                        <div class="shrink-0">
                         @if ($result = $this->myResult($exam))
-                            {{-- کارت نمره --}}
-                            <div class="flex items-center gap-3 rounded-xl bg-gradient-to-l from-[#faf0d2]/60 to-[#faf0d2]/20 border border-[#e8c465]/30 px-4 py-2.5">
+                                                        <div class="flex items-center gap-3 rounded-xl bg-gradient-to-l from-[#faf0d2]/60 to-[#faf0d2]/20 border border-[#e8c465]/30 px-4 py-2.5">
                                 <span class="grid h-10 w-10 place-items-center rounded-lg bg-gradient-to-br from-[#f0d060] to-[#d7a92b] text-sm font-extrabold text-[#0b1826] shadow-sm">
                                     {{ $this->fa($result->score) }}
                                 </span>
@@ -530,8 +512,7 @@ new class extends Component
                     </div>
                 </div>
             @empty
-                {{-- حالت خالی --}}
-                <div class="flex flex-col items-center gap-4 px-5 py-16 text-center">
+                                <div class="flex flex-col items-center gap-4 px-5 py-16 text-center">
                     <span class="grid h-16 w-16 place-items-center rounded-2xl bg-[#fdeaea] text-[#dc2626]">
                         <x-icon name="exam" class="h-8 w-8" />
                     </span>

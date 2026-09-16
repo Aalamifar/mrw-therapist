@@ -35,8 +35,7 @@ new class extends Component
 
 <div class="mx-auto max-w-lg space-y-5">
 
-    {{-- ═══════════ بازگشت ═══════════ --}}
-    <a
+        <a
         href="{{ route('admin.dashboard') }}"
         class="inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-sm text-slate-500 transition hover:bg-[#faf5ec] hover:text-slate-700"
     >
@@ -44,11 +43,9 @@ new class extends Component
         بازگشت به لیست کلاس‌ها
     </a>
 
-    {{-- ═══════════ کارت اصلی ═══════════ --}}
-    <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-6 shadow-sm sm:p-8">
+        <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-6 shadow-sm sm:p-8">
 
-        {{-- هدر با آیکون پاستلی --}}
-        <div class="flex items-start gap-4">
+                <div class="flex items-start gap-4">
             <span class="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-[#faf0d2] text-[#b98a10]">
                 <x-icon name="academic-cap" class="h-7 w-7" />
             </span>
@@ -58,19 +55,16 @@ new class extends Component
             </div>
         </div>
 
-        {{-- پیام موفقیت --}}
-        @if ($successMessage)
+                @if ($successMessage)
             <div class="mt-6 flex items-center gap-2 rounded-xl bg-[#e2f6e7] px-3 py-2.5 text-sm font-medium text-[#16a34a]">
                 <x-icon name="check-circle" class="h-4 w-4 shrink-0" />
                 {{ $successMessage }}
             </div>
         @endif
 
-        {{-- فرم --}}
-        <form wire:submit="createClass" class="mt-6 space-y-5">
+                <form wire:submit="createClass" class="mt-6 space-y-5">
 
-            {{-- نام کلاس --}}
-            <div>
+                        <div>
                 <label for="name" class="mb-1.5 block text-sm font-bold">نام کلاس</label>
                 <input
                     id="name"
@@ -84,8 +78,7 @@ new class extends Component
                 @enderror
             </div>
 
-            {{-- درس / موضوع --}}
-            <div>
+                        <div>
                 <label for="subject" class="mb-1.5 block text-sm font-bold">درس / موضوع کلاس</label>
                 <input
                     id="subject"
@@ -99,8 +92,7 @@ new class extends Component
                 @enderror
             </div>
 
-            {{-- مربی --}}
-            <div>
+                        <div>
                 <label for="therapist_id" class="mb-1.5 block text-sm font-bold">مربی</label>
                 <div class="relative">
                     <select
@@ -113,8 +105,7 @@ new class extends Component
                             <option value="{{ $therapist->id }}">{{ $therapist->name }}</option>
                         @endforeach
                     </select>
-                    {{-- فلش سفارشی --}}
-                    <x-icon
+                                        <x-icon
                         name="chevron-down"
                         class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#b98a10]"
                     />
@@ -124,8 +115,7 @@ new class extends Component
                 @enderror
             </div>
 
-            {{-- دکمه submit --}}
-            <button
+                        <button
                 type="submit"
                 wire:loading.attr="disabled"
                 wire:target="createClass"
@@ -146,8 +136,7 @@ new class extends Component
         </form>
     </div>
 
-    {{-- ═══════════ نکته راهنما ═══════════ --}}
-    <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8]/60 px-5 py-4 shadow-sm">
+        <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8]/60 px-5 py-4 shadow-sm">
         <div class="flex items-start gap-3">
             <x-icon name="sparkles" class="h-5 w-5 shrink-0 text-[#d7a92b]" />
             <p class="text-xs leading-relaxed text-slate-500">

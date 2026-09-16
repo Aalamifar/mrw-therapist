@@ -1,11 +1,9 @@
 <x-layouts.guest>
     <div class="mx-auto max-w-md px-4 py-12 sm:py-16">
 
-        {{-- ═══════════ کارت ورود ═══════════ --}}
-        <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
+                <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
 
-            {{-- هدر --}}
-            <div class="flex flex-col items-center gap-4 border-b border-[#f0e7dc] bg-gradient-to-b from-[#faf0d2]/40 to-transparent px-6 py-10 text-center">
+                        <div class="flex flex-col items-center gap-4 border-b border-[#f0e7dc] bg-gradient-to-b from-[#faf0d2]/40 to-transparent px-6 py-10 text-center">
                 <span class="grid h-20 w-20 place-items-center rounded-2xl bg-gradient-to-br from-[#f0d060] to-[#d7a92b] text-[#0b1826] shadow-lg ring-8 ring-[#faf0d2]/60">
                     <x-icon name="lock" class="h-10 w-10" />
                 </span>
@@ -17,12 +15,10 @@
                 </div>
             </div>
 
-            {{-- فرم --}}
-            <form method="POST" action="{{ route('course.access.check') }}" class="space-y-5 p-6 sm:p-8">
+                        <form method="POST" action="{{ route('course.access.check') }}" class="space-y-5 p-6 sm:p-8">
                 @csrf
 
-                {{-- پیام خطا --}}
-                @if ($errors->any())
+                                @if ($errors->any())
                     <div class="rounded-xl border border-red-200 bg-[#fdeaea] p-4">
                         <div class="flex items-start gap-2">
                             <x-icon name="x-mark" class="mt-0.5 h-4 w-4 shrink-0 text-[#dc2626]" />
@@ -35,8 +31,7 @@
                     </div>
                 @endif
 
-                {{-- کد دوره --}}
-                <div>
+                                <div>
                     <label class="mb-1.5 block text-sm font-bold">کد پیگیری دوره</label>
 
                     <div class="relative">
@@ -58,8 +53,7 @@
                     </p>
                 </div>
 
-                {{-- دکمه ورود --}}
-                <button
+                                <button
                     type="submit"
                     class="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-[#f0d060] to-[#d7a92b] py-3.5 text-sm font-extrabold text-[#0b1826] shadow-md transition hover:-translate-y-0.5 hover:shadow-lg"
                 >
@@ -69,8 +63,7 @@
                 </button>
             </form>
 
-            {{-- پاورقی --}}
-            <div class="border-t border-[#f0e7dc] bg-[#faf5ec]/40 px-6 py-4 text-center">
+                        <div class="border-t border-[#f0e7dc] bg-[#faf5ec]/40 px-6 py-4 text-center">
                 <p class="text-xs text-slate-500">
                     کد پیگیری ندارید؟
                     <a
@@ -83,8 +76,7 @@
             </div>
         </div>
 
-        {{-- نکته راهنما --}}
-        <div class="mt-5 flex items-start gap-2 rounded-xl border border-[#eee4d9] bg-[#fdfbf8]/60 px-4 py-3 text-xs text-slate-500 shadow-sm">
+                <div class="mt-5 flex items-start gap-2 rounded-xl border border-[#eee4d9] bg-[#fdfbf8]/60 px-4 py-3 text-xs text-slate-500 shadow-sm">
             <x-icon name="sparkles" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#d7a92b]" />
             <p>
                 کد پیگیری پس از <b>تأیید پرداخت توسط ادمین</b> برای شما فعال می‌شود. اگر پرداخت شما هنوز تأیید نشده، کمی صبر کنید.

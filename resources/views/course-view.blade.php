@@ -1,11 +1,9 @@
 <x-layouts.guest>
     <div class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
 
-        {{-- ═══════════ هدر دوره (Hero) ═══════════ --}}
-        <div class="mb-8 overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
+                <div class="mb-8 overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
 
-            {{-- تصویر دوره --}}
-            @if ($course->image)
+                        @if ($course->image)
                 <div class="relative aspect-video w-full overflow-hidden bg-[#faf0d2]/30">
                     <img
                         src="{{ asset('storage/' . $course->image) }}"
@@ -14,8 +12,7 @@
                     >
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
 
-                    {{-- عنوان روی تصویر --}}
-                    <div class="absolute bottom-0 right-0 left-0 p-5 sm:p-6">
+                                        <div class="absolute bottom-0 right-0 left-0 p-5 sm:p-6">
                         <h1 class="text-2xl font-extrabold text-white drop-shadow-lg sm:text-3xl">
                             {{ $course->title }}
                         </h1>
@@ -23,8 +20,7 @@
                 </div>
             @endif
 
-            {{-- اطلاعات دوره --}}
-            <div class="p-5 sm:p-6">
+                        <div class="p-5 sm:p-6">
                 <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
 
                     <div class="flex items-start gap-4">
@@ -47,8 +43,7 @@
                         </div>
                     </div>
 
-                    {{-- آمار --}}
-                    <div class="flex shrink-0 flex-wrap gap-2">
+                                        <div class="flex shrink-0 flex-wrap gap-2">
                         <span class="inline-flex items-center gap-1.5 rounded-lg bg-[#faf0d2] px-3 py-2 text-xs font-bold text-[#b98a10]">
                             <x-icon name="academic-cap" class="h-4 w-4" />
                             {{ number_format($lessons->count()) }} محتوا
@@ -62,8 +57,7 @@
             </div>
         </div>
 
-        {{-- ═══════════ لیست محتوا ═══════════ --}}
-        <div class="space-y-5">
+                <div class="space-y-5">
 
             @forelse ($lessons as $i => $lesson)
                 @php
@@ -75,10 +69,8 @@
 
                 <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm transition hover:border-[#d7a92b]/40 hover:shadow-md">
 
-                    {{-- هدرس --}}
-                    <div class="flex items-start gap-3 border-b border-[#f0e7dc] p-5">
-                        {{-- شماره + آواتار --}}
-                        <div class="flex shrink-0 flex-col items-center gap-1.5">
+                                        <div class="flex items-start gap-3 border-b border-[#f0e7dc] p-5">
+                                                <div class="flex shrink-0 flex-col items-center gap-1.5">
                             <span class="grid h-7 w-7 place-items-center rounded-lg bg-[#faf0d2] text-xs font-extrabold text-[#b98a10]">
                                 {{ $i + 1 }}
                             </span>
@@ -87,8 +79,7 @@
                             </span>
                         </div>
 
-                        {{-- عنوان + badge --}}
-                        <div class="min-w-0 flex-1">
+                                                <div class="min-w-0 flex-1">
                             <div class="flex flex-wrap items-center gap-2">
                                 <h3 class="text-base font-extrabold">{{ $lesson->title }}</h3>
                                 <span class="rounded-md px-2 py-0.5 text-[10px] font-bold {{ $tone['bg'] }} {{ $tone['text'] }}">
@@ -102,11 +93,9 @@
                         </div>
                     </div>
 
-                    {{-- محتوا --}}
-                    <div class="p-5">
+                                        <div class="p-5">
 
-                        {{-- جزوه PDF --}}
-                        @if ($isNote)
+                                                @if ($isNote)
                             <div
                                 class="overflow-hidden rounded-xl border border-[#eee4d9] bg-white shadow-sm"
                                 oncontextmenu="return false;"
@@ -124,8 +113,7 @@
                             </div>
                         @endif
 
-                        {{-- بازی HTML --}}
-                        @if ($lesson->type === 'html_game')
+                                                @if ($lesson->type === 'html_game')
                             <div class="flex flex-col items-center gap-4 rounded-xl border-2 border-dashed border-[#e0d4bf] bg-[#faf5ec]/50 p-8 text-center">
                                 <span class="grid h-16 w-16 place-items-center rounded-2xl bg-gradient-to-br from-[#f0d060] to-[#d7a92b] text-[#0b1826] shadow-md">
                                     <x-icon name="sparkles" class="h-8 w-8" />
@@ -148,8 +136,7 @@
                     </div>
                 </div>
             @empty
-                {{-- حالت خالی --}}
-                <div class="flex flex-col items-center gap-4 rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] px-5 py-20 text-center shadow-sm">
+                                <div class="flex flex-col items-center gap-4 rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] px-5 py-20 text-center shadow-sm">
                     <span class="grid h-20 w-20 place-items-center rounded-2xl bg-gradient-to-br from-[#f0d060] to-[#d7a92b] text-[#0b1826] shadow-md">
                         <x-icon name="academic-cap" class="h-10 w-10" />
                     </span>

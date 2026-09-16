@@ -54,15 +54,12 @@
 
 <div class="min-h-screen">
 
-    {{-- ═══════════ سایدبار دسکتاپ ═══════════ --}}
     <aside class="fixed right-0 top-0 z-50 hidden h-screen w-[240px] flex-col bg-[#0b1826] text-white lg:flex">
 
-        {{-- لوگو --}}
         <div class="relative flex h-44 items-center justify-center overflow-hidden">
             <img src="{{ asset('img/logo.png') }}" alt="لوگوی MRW" class="relative rounded-3xl p-2.5">
         </div>
 
-        {{-- منو --}}
         <nav class="mt-2 flex flex-1 flex-col gap-1 px-4">
             <x-nav-link :href="$dashboardRoute" icon="home">داشبورد</x-nav-link>
 
@@ -71,7 +68,6 @@
             @endforeach
         </nav>
 
-        {{-- پایین سایدبار --}}
         <div class="flex flex-col gap-1 border-t border-white/10 p-4">
             <x-nav-link href="#" icon="settings">راهنما</x-nav-link>
             <x-nav-link :href="route('logout')" icon="logout" form>خروج</x-nav-link>
@@ -79,14 +75,11 @@
     </aside>
 
 
-    {{-- ═══════════ محتوای اصلی ═══════════ --}}
     <div class="min-h-screen lg:mr-[240px]">
 
-        {{-- هدر با تاریخ زنده --}}
         <header class="sticky top-0 z-40 border-b border-[#e9ddc9] bg-[#f4eee7]/95 px-5 py-4 backdrop-blur lg:px-8">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    {{-- آواتار --}}
                     <div class="grid h-11 w-11 place-items-center rounded-full bg-[#f6e7c6] text-2xl">🐻</div>
 
                     <div>
@@ -117,7 +110,6 @@
     </div>
 
 
-    {{-- ═══════════ نوار پایین موبایل (طلایی) ═══════════ --}}
     <nav class="fixed bottom-0 right-0 left-0 z-50 border-t border-[#c4a44b] bg-[#0b1826] lg:hidden">
 
         <div class="grid h-[72px]" style="grid-template-columns: repeat({{ $mobileColumnCount }}, minmax(0, 1fr));">
@@ -142,7 +134,6 @@
     </nav>
 
 
-    {{-- منوی بیشتر موبایل --}}
     <div id="mobile-menu" class="fixed bottom-[72px] right-0 left-0 z-40 hidden rounded-t-3xl bg-[#0b1826] p-5 text-white shadow-2xl lg:hidden">
         <div class="grid grid-cols-2 gap-3">
             @foreach ($secondaryMobileItems as $item)

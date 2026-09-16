@@ -84,8 +84,7 @@ new class extends Component
 
 <div class="space-y-5">
 
-    {{-- ═══════════ هدر با آمار ═══════════ --}}
-    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div class="flex items-center gap-3">
             <span class="grid h-12 w-12 place-items-center rounded-2xl bg-[#dff4f0] text-[#0d9488]">
                 <x-icon name="clipboard-list" class="h-6 w-6" />
@@ -107,13 +106,11 @@ new class extends Component
         </button>
     </div>
 
-    {{-- ═══════════ فرم ساخت تکلیف ═══════════ --}}
-    @if ($showForm)
+        @if ($showForm)
         <div class="rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] p-5 shadow-sm sm:p-6">
             <form wire:submit="save" class="space-y-4">
 
-                {{-- عنوان --}}
-                <div>
+                                <div>
                     <label class="mb-1.5 block text-sm font-bold">عنوان تکلیف</label>
                     <input
                         type="text"
@@ -124,8 +121,7 @@ new class extends Component
                     @error('title') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                 </div>
 
-                {{-- توضیحات --}}
-                <div>
+                                <div>
                     <label class="mb-1.5 block text-sm font-bold">توضیحات</label>
                     <textarea
                         wire:model="description"
@@ -136,8 +132,7 @@ new class extends Component
                     @error('description') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                 </div>
 
-                {{-- تاریخ‌ها --}}
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
                         <label class="mb-1.5 block text-sm font-bold">نمایان شود از تاریخ</label>
                         <x-jalali-datetime-picker
@@ -156,8 +151,7 @@ new class extends Component
                     </div>
                 </div>
 
-                {{-- دکمه‌ها --}}
-                <div class="flex gap-2 pt-2">
+                                <div class="flex gap-2 pt-2">
                     <button
                         type="submit"
                         wire:loading.attr="disabled"
@@ -188,8 +182,7 @@ new class extends Component
         </div>
     @endif
 
-    {{-- ═══════════ لیست تکالیف ═══════════ --}}
-    <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
+        <div class="overflow-hidden rounded-2xl border border-[#eee4d9] bg-[#fdfbf8] shadow-sm">
         @forelse ($this->assignments() as $assignment)
             @php $status = $this->status($assignment); @endphp
 
@@ -198,13 +191,11 @@ new class extends Component
                 class="flex flex-col gap-3 border-b border-[#f0e7dc] px-5 py-4 transition last:border-b-0 hover:bg-[#faf5ec] sm:flex-row sm:items-center sm:justify-between"
             >
                 <div class="flex min-w-0 flex-1 items-start gap-3">
-                    {{-- آواتار --}}
-                    <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl {{ $status['class'] }}">
+                                        <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl {{ $status['class'] }}">
                         <x-icon name="clipboard-list" class="h-5 w-5" />
                     </span>
 
-                    {{-- اطلاعات --}}
-                    <div class="min-w-0 flex-1">
+                                        <div class="min-w-0 flex-1">
                         <div class="flex flex-wrap items-center gap-2">
                             <span class="truncate font-bold">{{ $assignment->title }}</span>
                             <span class="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-bold {{ $status['class'] }}">
@@ -217,8 +208,7 @@ new class extends Component
                             <p class="mt-1 line-clamp-2 text-xs text-slate-500">{{ $assignment->description }}</p>
                         @endif
 
-                        {{-- تاریخ‌ها + آمار --}}
-                        <div class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500">
+                                                <div class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500">
                             @if ($assignment->visible_at)
                                 <span class="inline-flex items-center gap-1">
                                     <x-icon name="calendar" class="h-3.5 w-3.5 text-[#b98a10]" />
@@ -241,8 +231,7 @@ new class extends Component
                     </div>
                 </div>
 
-                {{-- دکمه حذف --}}
-                <div class="flex shrink-0 items-center">
+                                <div class="flex shrink-0 items-center">
                     <a href="{{ route('therapist.assignments.submissions', $assignment->id) }}"
                         class="inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-bold text-[#061C32] transition hover:bg-[#061C32]/5">
                         <x-icon name="check-circle" class="h-4 w-4" />
@@ -260,8 +249,7 @@ new class extends Component
                 </div>
             </div>
         @empty
-            {{-- حالت خالی --}}
-            <div class="flex flex-col items-center gap-4 px-5 py-16 text-center">
+                        <div class="flex flex-col items-center gap-4 px-5 py-16 text-center">
                 <span class="grid h-16 w-16 place-items-center rounded-2xl bg-[#dff4f0] text-[#0d9488]">
                     <x-icon name="clipboard-list" class="h-8 w-8" />
                 </span>
